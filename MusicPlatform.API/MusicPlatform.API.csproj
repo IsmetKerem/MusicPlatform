@@ -14,4 +14,8 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MusicPlatform.Business\MusicPlatform.Business.csproj" />
+    </ItemGroup>
+
 </Project>

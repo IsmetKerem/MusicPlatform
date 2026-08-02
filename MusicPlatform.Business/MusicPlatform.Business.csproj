@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MusicPlatform.DAL\MusicPlatform.DAL.csproj" />
+      <ProjectReference Include="..\MusicPlatform.Shared\MusicPlatform.Shared.csproj" />
+    </ItemGroup>
+
 </Project>
