@@ -98,6 +98,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// ---------------------------------------------------------------- Seed verisi
 using (var scope = app.Services.CreateScope())
 {
     var sp = scope.ServiceProvider;
@@ -112,47 +113,7 @@ using (var scope = app.Services.CreateScope())
         app.Environment.ContentRootPath,
         builder.Configuration["MusicSettings:CoverFolder"]!);
 
-    // ======================= GEÇİCİ TEŞHİS =======================
-    Console.WriteLine("==================================================");
-    Console.WriteLine($"ContentRootPath : {app.Environment.ContentRootPath}");
-    Console.WriteLine($"musicFolder     : {musicFolder}");
-    Console.WriteLine($"Klasor var mi   : {Directory.Exists(musicFolder)}");
-
-    if (Directory.Exists(musicFolder))
-    {
-        var files = Directory.GetFiles(musicFolder, "*.mp3");
-        Console.WriteLine($"MP3 sayisi      : {files.Length}");
-
-        if (files.Length > 0)
-        {
-            Console.WriteLine($"Ilk dosya       : {Path.GetFileName(files[0])}");
-            try
-            {
-                using var tag = TagLib.File.Create(files[0]);
-                Console.WriteLine($"TagLib sure     : {(int)tag.Properties.Duration.TotalSeconds} sn");
-                Console.WriteLine($"Gomulu kapak    : {tag.Tag.Pictures.Length} adet");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"TagLib HATASI   : {ex.GetType().Name} - {ex.Message}");
-            }
-        }
-    }
-    else
-    {
-        var parent = Directory.GetParent(musicFolder)?.FullName;
-        Console.WriteLine($"Ust klasor      : {parent}");
-        if (parent is not null && Directory.Exists(parent))
-        {
-            Console.WriteLine("Ust klasordeki icerik:");
-            foreach (var d in Directory.GetFileSystemEntries(parent))
-                Console.WriteLine($"   - {Path.GetFileName(d)}");
-        }
-    }
-    Console.WriteLine("==================================================");
-    // ===================== TESHIS SONU ===========================
-
-    // await DbSeeder.SeedAsync(context, userManager, musicFolder, coverFolder);
+    await DbSeeder.SeedAsync(context, userManager, musicFolder, coverFolder);
 }
 
 if (app.Environment.IsDevelopment())

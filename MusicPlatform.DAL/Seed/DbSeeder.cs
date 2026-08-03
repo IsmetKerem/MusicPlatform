@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MusicPlatform.DAL.Context;
@@ -17,9 +18,7 @@ public static class DbSeeder
         await context.Database.MigrateAsync();
 
         await SeedGenresAsync(context);
-        await SeedArtistsAsync(context);
-        await SeedAlbumsAsync(context);
-        await SeedSongsAsync(context, musicFolderPath, coverFolderPath);
+        await ScanMusicFolderAsync(context, musicFolderPath, coverFolderPath);
         await SeedUsersAsync(userManager);
         await SeedListeningHistoryAsync(context, userManager);
     }
@@ -36,182 +35,274 @@ public static class DbSeeder
             new Genre { Name = "Rock",       ColorHex = "#F44336", Description = "Gitar ağırlıklı, enerjik tür." },
             new Genre { Name = "Electronic", ColorHex = "#00BCD4", Description = "Elektronik prodüksiyon ağırlıklı müzik." },
             new Genre { Name = "Akustik",    ColorHex = "#8BC34A", Description = "Sade enstrümantasyon, canlı kayıt hissi." },
-            new Genre { Name = "Arabesk",    ColorHex = "#607D8B", Description = "Duygusal anlatım ağırlıklı yerel tür." }
+            new Genre { Name = "Arabesk",    ColorHex = "#607D8B", Description = "Duygusal anlatım ağırlıklı yerel tür." },
+            new Genre { Name = "Jazz",       ColorHex = "#3F51B5", Description = "Doğaçlama ve swing ritimleri." }
         );
-
-        await context.SaveChangesAsync();
-    }
-
-    // --------------------------------------------------------------- ARTISTS
-    private static async Task SeedArtistsAsync(AppDbContext context)
-    {
-        if (await context.Artists.AnyAsync()) return;
-
-        var artists = new[]
-        {
-            new Artist { Name = "Alega",             Country = "Türkiye", DebutYear = 2019, Bio = "Alternatif rap sahnesinde öne çıkan isim." },
-            new Artist { Name = "Ali Chapo",         Country = "Türkiye", DebutYear = 2018, Bio = "Sert anlatımlı rap parçalarıyla tanınıyor." },
-            new Artist { Name = "AURA",              Country = "Türkiye", DebutYear = 2020, Bio = "Yeni nesil rap kuşağının üretken temsilcisi." },
-            new Artist { Name = "BLOK3",             Country = "Türkiye", DebutYear = 2017, Bio = "Arabesk ve rap füzyonuyla geniş kitleye ulaşan sanatçı." },
-            new Artist { Name = "Burak Bulut",       Country = "Türkiye", DebutYear = 2016, Bio = "Pop ve arabesk arasında gezinen vokalist." },
-            new Artist { Name = "Can Demir",         Country = "Türkiye", DebutYear = 2021, Bio = "Akustik dokulu pop şarkıların yazarı." },
-            new Artist { Name = "Derya Uluğ",        Country = "Türkiye", DebutYear = 2015, Bio = "Dans pop üretimleriyle listelerde yer alan şarkıcı." },
-            new Artist { Name = "Duru",              Country = "Türkiye", DebutYear = 2022, Bio = "Sade prodüksiyonlu pop şarkılarıyla dikkat çekti." },
-            new Artist { Name = "Emre Fel",          Country = "Türkiye", DebutYear = 2019, Bio = "R&B ve pop kesişiminde üreten sanatçı." },
-            new Artist { Name = "Gülşen",            Country = "Türkiye", DebutYear = 1996, Bio = "Türk pop müziğinin uzun soluklu isimlerinden." },
-            new Artist { Name = "Hadise",            Country = "Belçika", DebutYear = 2005, Bio = "Dans pop odaklı repertuvarıyla tanınan sanatçı." },
-            new Artist { Name = "LVBEL C5",          Country = "Türkiye", DebutYear = 2020, Bio = "Trap ve pop-rap hattında üreten rapçi." },
-            new Artist { Name = "Mabel Matiz",       Country = "Türkiye", DebutYear = 2011, Bio = "Alternatif pop ve edebi söz yazarlığıyla öne çıkıyor." },
-            new Artist { Name = "manifest",          Country = "Türkiye", DebutYear = 2024, Bio = "Performans odaklı pop grubu." },
-            new Artist { Name = "Oğuzhan Koç",       Country = "Türkiye", DebutYear = 2013, Bio = "Duygusal pop şarkılarıyla bilinen şarkıcı ve sunucu." },
-            new Artist { Name = "POIZI",             Country = "Türkiye", DebutYear = 2021, Bio = "Yeni nesil trap sahnesinden bir isim." },
-            new Artist { Name = "Reynmen",           Country = "Türkiye", DebutYear = 2019, Bio = "Dijital platformlarda yüksek izlenme sayılarına ulaşan sanatçı." },
-            new Artist { Name = "Sefo",              Country = "Türkiye", DebutYear = 2018, Bio = "Melodik rap üretimleriyle tanınan sanatçı." },
-            new Artist { Name = "Semicenk",          Country = "Türkiye", DebutYear = 2018, Bio = "Arabesk-rap türünün popüler isimlerinden." },
-            new Artist { Name = "Simge",             Country = "Türkiye", DebutYear = 2011, Bio = "Pop müzik sahnesinin tanınan vokalisti." },
-            new Artist { Name = "Soner Sarıkabadayı", Country = "Türkiye", DebutYear = 2008, Bio = "Şarkı yazarı ve yorumcu." }
-        };
-
-        await context.Artists.AddRangeAsync(artists);
-        await context.SaveChangesAsync();
-    }
-
-    // ---------------------------------------------------------------- ALBUMS
-    private static async Task SeedAlbumsAsync(AppDbContext context)
-    {
-        if (await context.Albums.AnyAsync()) return;
-
-        var artistIds = await context.Artists.ToDictionaryAsync(a => a.Name, a => a.Id);
-
-        await context.Albums.AddRangeAsync(
-            new Album { Title = "BLOK3 Seçkisi",      ArtistId = artistIds["BLOK3"],      ReleaseDate = new DateTime(2023, 4, 10) },
-            new Album { Title = "manifest Seçkisi",   ArtistId = artistIds["manifest"],   ReleaseDate = new DateTime(2025, 2, 14) },
-            new Album { Title = "Derya Uluğ Seçkisi", ArtistId = artistIds["Derya Uluğ"], ReleaseDate = new DateTime(2022, 8, 5)  },
-            new Album { Title = "Semicenk Seçkisi",   ArtistId = artistIds["Semicenk"],   ReleaseDate = new DateTime(2023, 11, 3) }
-        );
-
-        await context.SaveChangesAsync();
-    }
-
-    // ----------------------------------------------------------------- SONGS
-    private static async Task SeedSongsAsync(AppDbContext context, string musicFolderPath, string coverFolderPath)
-    {
-        if (await context.Songs.AnyAsync()) return;
-
-        var artistIds = await context.Artists.ToDictionaryAsync(a => a.Name, a => a.Id);
-        var genreIds  = await context.Genres.ToDictionaryAsync(g => g.Name, g => g.Id);
-        var albumIds  = await context.Albums.ToDictionaryAsync(a => a.Title, a => a.Id);
-
-        var data = new (string Title, string Artist, string? Album, string File, PackageLevel Pkg, string[] Genres)[]
-        {
-            // ------------------------------ BASIC (7) ------------------------------
-            ("Düzenli Şekilde Ölmek", "Alega",       null,                 "alega-duzenli-sekilde-olmek.mp3",  PackageLevel.Basic,   new[]{"Rap"}),
-            ("Canavar",               "Ali Chapo",   null,                 "ali-chapo-canavar.mp3",            PackageLevel.Basic,   new[]{"Rap"}),
-            ("Tuzak",                 "AURA",        null,                 "aura-tuzak.mp3",                   PackageLevel.Basic,   new[]{"Rap"}),
-            ("Gel Dedim Geldin",      "Can Demir",   null,                 "can-demir-gel-dedim-geldin.mp3",   PackageLevel.Basic,   new[]{"Pop","Akustik"}),
-            ("aşk şarkısı (değil)",   "Duru",        null,                 "duru-ask-sarkisi-degil.mp3",       PackageLevel.Basic,   new[]{"Pop","Akustik"}),
-            ("Bir Güldün",            "Emre Fel",    null,                 "emre-fel-ft-funktakl-bir-guldun.mp3", PackageLevel.Basic, new[]{"R&B","Pop"}),
-            ("Başımda Belalar",       "POIZI",       null,                 "poizi-basimda-belalar.mp3",        PackageLevel.Basic,   new[]{"Rap"}),
-
-            // ------------------------------ GOLD (7) -------------------------------
-            ("Kırgınım",              "BLOK3",       "BLOK3 Seçkisi",      "blok3-kirginim.mp3",               PackageLevel.Gold,    new[]{"Rap","Arabesk"}),
-            ("Kusura Bakma",          "BLOK3",       "BLOK3 Seçkisi",      "blok3-kusura-bakma.mp3",           PackageLevel.Gold,    new[]{"Rap"}),
-            ("Diva",                  "Burak Bulut", null,                 "burak-bulut-diva.mp3",             PackageLevel.Gold,    new[]{"Pop"}),
-            ("Hani",                  "Derya Uluğ",  "Derya Uluğ Seçkisi", "derya-ulug-hani.mp3",              PackageLevel.Gold,    new[]{"Pop"}),
-            ("Geçsin Yıllar",         "Oğuzhan Koç", null,                 "oguzhan-koc-merve-ozbey-gecsin-yillar.mp3", PackageLevel.Gold, new[]{"Pop","Akustik"}),
-            ("Çıkmaz Bir Sokakta",    "Semicenk",    "Semicenk Seçkisi",   "semicenk-cikmaz-bir-sokakta.mp3",  PackageLevel.Gold,    new[]{"Arabesk","R&B"}),
-            ("Kalpsiz Bir Serseri",   "Simge",       null,                 "simge-kalpsiz-bir-serseri.mp3",    PackageLevel.Gold,    new[]{"Pop","Akustik"}),
-
-            // ----------------------------- PREMIUM (7) -----------------------------
-            ("Napıyosun Mesela?",     "BLOK3",       "BLOK3 Seçkisi",      "blok3-napiyosun-mesela.mp3",       PackageLevel.Premium, new[]{"Rap"}),
-            ("Şımarık",               "Derya Uluğ",  "Derya Uluğ Seçkisi", "derya-ulug-simarik.mp3",           PackageLevel.Premium, new[]{"Pop","Electronic"}),
-            ("İtaat Yok",             "Gülşen",      null,                 "gulsen-itaat-yok.mp3",             PackageLevel.Premium, new[]{"Pop","Electronic"}),
-            ("Gel Gel Gel",           "LVBEL C5",    null,                 "lvbel-c5-dystinct-gel-gel-gel.mp3",PackageLevel.Premium, new[]{"Rap","Pop"}),
-            ("Rüya",                  "manifest",    "manifest Seçkisi",   "manifest-ruya.mp3",                PackageLevel.Premium, new[]{"Pop","R&B"}),
-            ("Çatma Yarim",           "Reynmen",     null,                 "reynmen-catma-yarim.mp3",          PackageLevel.Premium, new[]{"Pop","Arabesk"}),
-            ("Her İki Durumda",       "Soner Sarıkabadayı", null,          "soner-sarikabadayi-sefo-aerro-her-iki-durumda.mp3", PackageLevel.Premium, new[]{"Pop","Rap"}),
-
-            // ------------------------------ ELIT (6) -------------------------------
-            ("Ara Beni",              "Hadise",      null,                 "hadise-ara-beni.mp3",              PackageLevel.Elit,    new[]{"Pop","Electronic"}),
-            ("Dağılıyorum Olaysız",   "Mabel Matiz", null,                 "mabel-matiz-dagiliyorum-olaysiz.mp3", PackageLevel.Elit, new[]{"Pop","Rock"}),
-            ("Başrol Sensin",         "manifest",    "manifest Seçkisi",   "manifest-basrol-sensin.mp3",       PackageLevel.Elit,    new[]{"Pop"}),
-            ("Toz Pembe",             "manifest",    "manifest Seçkisi",   "manifest-toz-pembe.mp3",           PackageLevel.Elit,    new[]{"Pop","Electronic"}),
-            ("Yerinde Dur",           "Sefo",        null,                 "sefo-demet-akalin-yerinde-dur.mp3",PackageLevel.Elit,    new[]{"Rap","Pop"}),
-            ("Üzülmedim Ki",          "Semicenk",    "Semicenk Seçkisi",   "semicenk-uzulmedim-ki.mp3",        PackageLevel.Elit,    new[]{"Arabesk","Pop"})
-        };
-
-        Directory.CreateDirectory(coverFolderPath);
-
-        foreach (var d in data)
-        {
-            var fullPath = Path.Combine(musicFolderPath, d.File);
-
-            var song = new Song
-            {
-                Title           = d.Title,
-                ArtistId        = artistIds[d.Artist],
-                AlbumId         = d.Album is null ? null : albumIds[d.Album],
-                FileName        = d.File,
-                RequiredPackage = d.Pkg,
-                PlayCount       = Random.Shared.Next(1_200, 95_000)
-            };
-
-            ReadMetadata(fullPath, coverFolderPath, song);
-
-            foreach (var g in d.Genres)
-                song.SongGenres.Add(new SongGenre { GenreId = genreIds[g] });
-
-            context.Songs.Add(song);
-        }
 
         await context.SaveChangesAsync();
     }
 
     /// <summary>
-    /// MP3'ten süreyi okur ve gömülü kapak görselini diske çıkarır.
-    /// Dosya yoksa veya etiket bozuksa sessizce varsayılanlarla devam eder.
+    /// Sanatçı adına göre tür ataması. Listede olmayan sanatçılar "Pop" sayılır.
     /// </summary>
-    private static void ReadMetadata(string mp3Path, string coverFolderPath, Song song)
+    private static readonly Dictionary<string, string[]> ArtistGenreMap = new(StringComparer.OrdinalIgnoreCase)
     {
-        if (!File.Exists(mp3Path))
+        // --- Rap ---
+        ["Şam"]               = new[] { "Rap" },
+        ["Poizi"]             = new[] { "Rap" },
+        ["Doğu Swag"]         = new[] { "Rap" },
+        ["Eypio"]             = new[] { "Rap" },
+        ["CRUSH"]             = new[] { "Rap" },
+        ["Amo988"]            = new[] { "Rap" },
+        ["Asil Gök"]          = new[] { "Rap" },
+
+        // --- Arabesk / Arabesk-Rap ---
+        ["Semicenk"]          = new[] { "Arabesk", "R&B" },
+        ["Ceylan"]            = new[] { "Arabesk" },
+        ["Mahsun Kırmızıgül"] = new[] { "Arabesk" },
+        ["Aynur Polat"]       = new[] { "Arabesk" },
+        ["Berkay"]            = new[] { "Arabesk", "Pop" },
+        ["Burak Bulut"]       = new[] { "Arabesk", "Pop" },
+        ["Demet Sağıroğlu"]   = new[] { "Arabesk", "Pop" },
+        ["Serkan Nişancı"]    = new[] { "Arabesk", "Pop" },
+
+        // --- Pop ---
+        ["Gülşen"]            = new[] { "Pop", "Electronic" },
+        ["Hadise"]            = new[] { "Pop", "Electronic" },
+        ["Ozan Doğulu"]       = new[] { "Pop", "Electronic" },
+        ["Demet Akalın"]      = new[] { "Pop" },
+        ["Ajda Pekkan"]       = new[] { "Pop" },
+        ["Sibel Can"]         = new[] { "Pop" },
+        ["Erol Evgin"]        = new[] { "Pop" },
+        ["Murat Dalkılıç"]    = new[] { "Pop" },
+        ["Tan Taşçı"]         = new[] { "Pop" },
+        ["Bahadır Tatlıöz"]   = new[] { "Pop" },
+        ["Cem Belevi"]        = new[] { "Pop" },
+        ["Derya Uluğ"]        = new[] { "Pop" },
+        ["Mert Demir"]        = new[] { "Pop" },
+        ["Reynmen"]           = new[] { "Pop" },
+        ["manifest"]          = new[] { "Pop" },
+        ["Ceren Sagu"]        = new[] { "Pop" },
+        ["Mela Bedel"]        = new[] { "Pop" },
+        ["Sıla Şahin"]        = new[] { "Pop" },
+        ["Zeki Arkun"]        = new[] { "Pop" },
+
+        // --- Pop / Akustik ---
+        ["Yalın"]             = new[] { "Pop", "Akustik" },
+        ["Fettah Can"]        = new[] { "Pop", "Akustik" },
+        ["Elif Buse Doğan"]   = new[] { "Akustik" },
+
+        // --- Rock / Alternatif ---
+        ["Mabel Matiz"]       = new[] { "Pop", "Rock" },
+        ["Nazan Öncel"]       = new[] { "Rock", "Pop" },
+        ["Zeynep Casalini"]   = new[] { "Rock", "Pop" },
+        ["Mavi Gri"]          = new[] { "Pop", "Rock" },
+
+        // --- Jazz ---
+        ["Peter Cincotti"]    = new[] { "Jazz" },
+    };
+
+    /// <summary>
+    /// Şarkı başlığında geçen ipuçlarına göre ek tür ataması.
+    /// </summary>
+    private static readonly (string Keyword, string Genre)[] TitleGenreHints =
+    {
+        ("akustik",  "Akustik"),
+        ("senfonik", "Akustik"),
+        ("live",     "Akustik"),
+        ("remix",    "Electronic"),
+    };
+
+    // ------------------------------------------------- MÜZİK KLASÖRÜ TARAMASI
+    private static async Task ScanMusicFolderAsync(
+        AppDbContext context, string musicFolderPath, string coverFolderPath)
+    {
+        if (await context.Songs.AnyAsync()) return;
+
+        if (!Directory.Exists(musicFolderPath))
         {
-            song.DurationInSeconds = 180;
+            Console.WriteLine($"[SEED] Müzik klasörü bulunamadı: {musicFolderPath}");
             return;
         }
 
-        try
+        Directory.CreateDirectory(coverFolderPath);
+
+        var files = Directory.GetFiles(musicFolderPath, "*.mp3")
+                             .OrderBy(f => f, StringComparer.OrdinalIgnoreCase)
+                             .ToList();
+
+        var genreIds = await context.Genres.ToDictionaryAsync(g => g.Name, g => g.Id);
+
+        var artistCache = new Dictionary<string, Artist>(StringComparer.OrdinalIgnoreCase);
+        var albumCache  = new Dictionary<string, Album>(StringComparer.OrdinalIgnoreCase);
+
+        var packages = new[] { PackageLevel.Basic, PackageLevel.Gold, PackageLevel.Premium, PackageLevel.Elit };
+        var index = 0;
+        var coverCount = 0;
+
+        foreach (var file in files)
         {
-            using var tag = TagLib.File.Create(mp3Path);
+            var fileName = Path.GetFileName(file);
 
-            song.DurationInSeconds = (int)tag.Properties.Duration.TotalSeconds;
+            string title;
+            string artistName;
+            string? albumTitle;
+            var duration = 180;
+            string? coverUrl = null;
 
-            var picture = tag.Tag.Pictures.FirstOrDefault();
-            if (picture is not null && picture.Data.Data.Length > 0)
+            try
             {
-                var ext = picture.MimeType switch
-                {
-                    "image/png" => ".png",
-                    "image/webp" => ".webp",
-                    _ => ".jpg"
-                };
+                using var tag = TagLib.File.Create(file);
 
-                var coverName = Path.GetFileNameWithoutExtension(mp3Path) + ext;
-                var coverPath = Path.Combine(coverFolderPath, coverName);
+                title = Clean(tag.Tag.Title) ?? PrettifyFileName(fileName);
 
-                if (!File.Exists(coverPath))
-                    File.WriteAllBytes(coverPath, picture.Data.Data);
+                artistName = PrimaryArtist(
+                    Clean(tag.Tag.FirstPerformer)
+                    ?? Clean(tag.Tag.FirstAlbumArtist)
+                    ?? "Bilinmeyen Sanatçı");
 
-                song.CoverImageUrl = $"/covers/{coverName}";
+                albumTitle = Clean(tag.Tag.Album);
+
+                if (albumTitle is not null &&
+                    albumTitle.Equals("Unknown Album", StringComparison.OrdinalIgnoreCase))
+                    albumTitle = null;
+
+                if (tag.Properties.Duration.TotalSeconds > 1)
+                    duration = (int)tag.Properties.Duration.TotalSeconds;
+
+                coverUrl = ExtractCover(tag, fileName, coverFolderPath);
+                if (coverUrl is not null) coverCount++;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[SEED] '{fileName}' okunamadı ({ex.GetType().Name}), dosya adından devam ediliyor.");
+                title      = PrettifyFileName(fileName);
+                artistName = "Bilinmeyen Sanatçı";
+                albumTitle = null;
+            }
+
+            if (!artistCache.TryGetValue(artistName, out var artist))
+            {
+                artist = new Artist
+                {
+                    Name = artistName,
+                    Country = "Türkiye",
+                    Bio = $"{artistName}, sistemde {{n}} şarkısıyla yer alıyor."
+                };
+                context.Artists.Add(artist);
+                artistCache[artistName] = artist;
+            }
+
+            Album? album = null;
+            if (albumTitle is not null)
+            {
+                var key = $"{artistName}||{albumTitle}";
+                if (!albumCache.TryGetValue(key, out album))
+                {
+                    album = new Album { Title = albumTitle, Artist = artist };
+                    context.Albums.Add(album);
+                    albumCache[key] = album;
+                }
+            }
+
+            var song = new Song
+            {
+                Title             = title,
+                Artist            = artist,
+                Album             = album,
+                FileName          = fileName,
+                DurationInSeconds = duration,
+                CoverImageUrl     = coverUrl,
+                RequiredPackage   = packages[index % packages.Length],
+                PlayCount         = Random.Shared.Next(1_200, 95_000)
+            };
+
+            var chosen = new HashSet<string>();
+
+            if (ArtistGenreMap.TryGetValue(artistName, out var mapped))
+                foreach (var g in mapped) chosen.Add(g);
+
+            foreach (var (keyword, genre) in TitleGenreHints)
+                if (title.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                    chosen.Add(genre);
+
+            if (chosen.Count == 0) chosen.Add("Pop");
+
+            foreach (var g in chosen)
+                if (genreIds.TryGetValue(g, out var gid))
+                    song.SongGenres.Add(new SongGenre { GenreId = gid });
+
+            context.Songs.Add(song);
+            index++;
         }
-        catch
+
+        await context.SaveChangesAsync();
+
+        foreach (var a in artistCache.Values)
         {
-            if (song.DurationInSeconds == 0)
-                song.DurationInSeconds = 180;
+            var count = await context.Songs.CountAsync(s => s.ArtistId == a.Id);
+            a.Bio = a.Bio!.Replace("{n}", count.ToString());
         }
+        await context.SaveChangesAsync();
+
+        Console.WriteLine($"[SEED] {files.Count} şarkı, {artistCache.Count} sanatçı, {albumCache.Count} albüm eklendi.");
+        Console.WriteLine($"[SEED] Kapak görseli çıkarılan şarkı: {coverCount}/{files.Count}");
+        Console.WriteLine("[SEED] Sanatçılar: " + string.Join(", ", artistCache.Keys.OrderBy(x => x)));
+
+        var eksikTur = artistCache.Keys.Where(k => !ArtistGenreMap.ContainsKey(k)).ToList();
+        if (eksikTur.Count > 0)
+            Console.WriteLine("[SEED] Tür haritasında olmayan (Pop atandı): " + string.Join(", ", eksikTur));
     }
 
-    // ----------------------------------------------------------------- USERS
+    private static string? ExtractCover(TagLib.File tag, string mp3FileName, string coverFolderPath)
+    {
+        var picture = tag.Tag.Pictures.FirstOrDefault();
+        if (picture is null || picture.Data.Data.Length == 0) return null;
+
+        var ext = picture.MimeType switch
+        {
+            "image/png"  => ".png",
+            "image/webp" => ".webp",
+            _            => ".jpg"
+        };
+
+        var coverName = Path.GetFileNameWithoutExtension(mp3FileName) + ext;
+        var coverPath = Path.Combine(coverFolderPath, coverName);
+
+        if (!File.Exists(coverPath))
+            File.WriteAllBytes(coverPath, picture.Data.Data);
+
+        return $"/covers/{coverName}";
+    }
+
+
+    private static string PrimaryArtist(string raw)
+    {
+        var separators = new[] { ",", " & ", " feat.", " feat ", " ft.", " ft ", " x ", " X ", " Feat" };
+
+        var result = raw;
+        foreach (var sep in separators)
+        {
+            var idx = result.IndexOf(sep, StringComparison.OrdinalIgnoreCase);
+            if (idx > 0) result = result[..idx];
+        }
+
+        return result.Trim();
+    }
+
+    private static string? Clean(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return null;
+        return value.Trim().Normalize(NormalizationForm.FormC);
+    }
+
+    private static string PrettifyFileName(string fileName)
+    {
+        var name = Path.GetFileNameWithoutExtension(fileName).Replace('-', ' ').Replace('_', ' ');
+        return string.Join(' ', name.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(w => char.ToUpper(w[0]) + w[1..]));
+    }
+
     private static async Task SeedUsersAsync(UserManager<AppUser> userManager)
     {
         var testUsers = new (string Email, string First, string Last, PackageLevel Pkg)[]
@@ -241,7 +332,6 @@ public static class DbSeeder
         }
     }
 
-    // ------------------------------------------------------ LISTENING HISTORY
     private static async Task SeedListeningHistoryAsync(AppDbContext context, UserManager<AppUser> userManager)
     {
         if (await context.ListeningHistories.AnyAsync()) return;
@@ -250,20 +340,17 @@ public static class DbSeeder
         var premium = await userManager.FindByEmailAsync("premium@music.com");
         if (elit is null || premium is null) return;
 
-        var songs = await context.Songs.ToDictionaryAsync(s => s.FileName, s => s);
+        var songs = await context.Songs.OrderBy(s => s.Id).ToListAsync();
+        if (songs.Count < 4) return;
+
         var rnd = Random.Shared;
         var history = new List<ListeningHistory>();
 
-        // Öneri motorunun yakalayacağı kasıtlı ilişki:
-        // "Kırgınım" dinleyen "Çıkmaz Bir Sokakta"yı da dinliyor.
-        var pair = new[] { "blok3-kirginim.mp3", "semicenk-cikmaz-bir-sokakta.mp3" };
+        var pair = new[] { songs[0], songs[1] };
 
         foreach (var user in new[] { elit, premium })
         {
-            foreach (var file in pair)
-            {
-                if (!songs.TryGetValue(file, out var s)) continue;
-
+            foreach (var s in pair)
                 for (int i = 0; i < 4; i++)
                     history.Add(new ListeningHistory
                     {
@@ -273,12 +360,10 @@ public static class DbSeeder
                         ListenedSeconds = s.DurationInSeconds,
                         IsCompleted     = true
                     });
-            }
 
-            var pool = songs.Values.ToList();
             for (int i = 0; i < 15; i++)
             {
-                var s = pool[rnd.Next(pool.Count)];
+                var s = songs[rnd.Next(songs.Count)];
                 var listened = rnd.Next(20, Math.Max(25, s.DurationInSeconds));
                 history.Add(new ListeningHistory
                 {
