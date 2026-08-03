@@ -11,7 +11,7 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 
 
         optionsBuilder.UseSqlServer(
-            "Server=localhost;Database=MusicPlatformDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
+            "Server=localhost,1433;Database=MusicPlatformDb;User Id=sa;Password=Kerembaba44!;TrustServerCertificate=True;MultipleActiveResultSets=true;Encrypt=False");
 
         return new AppDbContext(optionsBuilder.Options);
     }
