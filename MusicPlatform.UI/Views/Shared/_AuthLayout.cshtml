@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>@ViewData["Title"] - MusicPlatform</title>
+
+    <link rel="stylesheet" href="~/Bepop/assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Bepop/assets/css/theme.css" />
+    <link rel="stylesheet" href="~/Bepop/assets/css/style.css" />
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+</head>
+<body class="layout-row bg-dark">
+
+<div class="d-flex flex-column flex">
+    <div class="row no-gutters h-100">
+
+        <div class="col-md-6 bg-dark bg-img d-none d-md-block"
+             style="background-image:url(/Bepop/assets/img/b6.jpg)">
+            <div class="p-3 p-md-5 d-flex flex-column h-100">
+                <h4 class="mb-3 text-white">MusicPlatform</h4>
+                <div class="text-fade">JWT tabanlı müzik dinleme sistemi</div>
+
+                <div class="d-flex flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <div class="text-white h2 mb-3">Dört paket, tek platform</div>
+                        <div class="text-fade">Basic · Gold · Premium · Elit</div>
+                    </div>
+                </div>
+
+                <div class="d-flex text-sm text-fade">
+                    <span class="flex"></span>
+                    <span>&copy; @DateTime.Now.Year MusicPlatform</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="p-3 p-md-5">
+
+                @if (TempData["Success"] is string success)
+                {
+                    <div class="alert alert-success py-2 px-3 text-sm">@success</div>
+                }
+                @if (TempData["Error"] is string error)
+                {
+                    <div class="alert alert-danger py-2 px-3 text-sm">@error</div>
+                }
+
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Bepop/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/Bepop/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="~/Bepop/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

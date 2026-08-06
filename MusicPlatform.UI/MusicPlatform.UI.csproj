@@ -10,4 +10,50 @@
       <ProjectReference Include="..\MusicPlatform.Shared\MusicPlatform.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="wwwroot\Bepop\.DS_Store" />
+      <Content Include="wwwroot\Bepop\assets\.DS_Store" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\Bepop\libs\plyrist\dist\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\libs\pjax\pjax.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\libs\pjax\pjax.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\libs\jquery-fullscreen-plugin\jquery.fullscreen-min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\build.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\changelog.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\component.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\file-structure.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\introduction.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\plugin.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\rtl.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\docs\scripts.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\404.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\505.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\artist.detail.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\artists.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\blog.detail.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\blog.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\charts.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\discover.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\forgot-password.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\genres.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\item.detail.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\lockme.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\page.about.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\rtl.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\signin.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Bepop\html\signup.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
+    </ItemGroup>
+
 </Project>

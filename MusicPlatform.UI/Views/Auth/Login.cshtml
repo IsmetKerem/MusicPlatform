@@ -1,0 +1,59 @@
+@model MusicPlatform.UI.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "_AuthLayout";
+}
+
+<h5>Tekrar hoş geldin</h5>
+<p><small class="text-muted">Hesabına giriş yap ve dinlemeye devam et</small></p>
+
+<form asp-action="Login" method="post" class="mt-4">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ReturnUrl" />
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 px-3 text-sm"></div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" placeholder="ornek@mail.com" autocomplete="email" />
+        <span asp-validation-for="Email" class="text-danger text-sm"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" placeholder="••••••••" autocomplete="current-password" />
+        <span asp-validation-for="Password" class="text-danger text-sm"></span>
+        <div class="my-3 text-right">
+            <a asp-action="ForgotPassword" class="text-muted">Şifremi unuttum</a>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mb-4">Giriş Yap</button>
+
+    <div>
+        Hesabın yok mu?
+        <a asp-action="Register" class="text-primary">Kayıt ol</a>
+    </div>
+</form>
+
+<div class="mt-5 p-3 rounded bg-dark-overlay">
+    <div class="text-sm text-muted mb-2">Test hesapları (şifre: <code>Test123!</code>)</div>
+    <div class="text-sm">
+        <div class="d-flex justify-content-between py-1">
+            <span class="text-muted">basic@music.com</span><span class="badge badge-secondary">Basic</span>
+        </div>
+        <div class="d-flex justify-content-between py-1">
+            <span class="text-muted">gold@music.com</span><span class="badge badge-success">Gold</span>
+        </div>
+        <div class="d-flex justify-content-between py-1">
+            <span class="text-muted">premium@music.com</span><span class="badge badge-info">Premium</span>
+        </div>
+        <div class="d-flex justify-content-between py-1">
+            <span class="text-muted">elit@music.com</span><span class="badge badge-warning">Elit</span>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

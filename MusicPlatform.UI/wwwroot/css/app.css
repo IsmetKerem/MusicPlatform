@@ -1,0 +1,70 @@
+/* ---------------------------------------------- MusicPlatform ozel stiller */
+
+/* Kilitli sarki karti */
+.song-locked .media-content {
+    filter: grayscale(70%) brightness(0.6);
+}
+
+.song-locked .btn-play {
+    background: rgba(255, 255, 255, 0.35) !important;
+}
+
+.package-lock-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.pkg-1 { background: #6c757d; color: #fff; }
+.pkg-2 { background: #28a745; color: #fff; }
+.pkg-3 { background: #17a2b8; color: #fff; }
+.pkg-4 { background: #f0ad4e; color: #14121f; }
+
+/* Calan sarki */
+.list-item.playing .list-title {
+    color: var(--primary, #6c4df6) !important;
+}
+
+/* Player'in altta birakmasi gereken bosluk */
+#content {
+    padding-bottom: 90px;
+}
+
+/* Avatar bas harfi */
+.avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+/* Bos durum */
+.empty-state {
+    padding: 80px 20px;
+    text-align: center;
+    color: #8b8798;
+}
+
+/* Yukleniyor */
+.loading-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--primary, #6c4df6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s;
+    z-index: 9999;
+}
+
+.loading-overlay.active {
+    transform: scaleX(0.7);
+}
