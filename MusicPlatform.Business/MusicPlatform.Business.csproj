@@ -18,6 +18,8 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+      <PackageReference Include="Microsoft.ML" Version="3.0.0" />
+      <PackageReference Include="Microsoft.ML.Recommender" Version="0.20.1" />
       <PackageReference Include="MimeKit" Version="4.17.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
     </ItemGroup>

@@ -147,6 +147,11 @@ using (var scope = app.Services.CreateScope())
         builder.Configuration["MusicSettings:CoverFolder"] ?? "wwwroot/covers");
 
     await DbSeeder.SeedAsync(context, userManager, musicFolder, coverFolder);
+
+    // Öneri motorunun anlamlı sonuç üretebilmesi için sahte kullanıcı ve
+    // dinleme geçmişi. Sadece geliştirme ortamında çalışır.
+    if (app.Environment.IsDevelopment())
+        await DemoDataGenerator.GenerateAsync(context, userManager);
 }
 
 if (app.Environment.IsDevelopment())
@@ -173,6 +178,11 @@ RecurringJob.AddOrUpdate<INotificationService>(
     "haftalik-oneri-bulteni",
     svc => svc.SendWeeklyRecommendationsAsync(),
     Cron.Weekly(DayOfWeek.Monday, 10));
+
+RecurringJob.AddOrUpdate<IRecommendationService>(
+    "ml-model-egitimi",
+    svc => svc.TrainModelAsync(),
+    Cron.Daily(3));
 
 app.MapControllers();
 

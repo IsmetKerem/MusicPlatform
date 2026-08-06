@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MusicPlatform.Business.ML;
 using MusicPlatform.Business.Options;
 using MusicPlatform.Business.Services.Abstract;
 using MusicPlatform.Business.Services.Concrete;
@@ -30,6 +31,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<IMailService, MailService>();
         services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<IRecommendationService, RecommendationService>();
+        services.AddSingleton<MatrixFactorizationRecommender>();
         
 
         return services;
