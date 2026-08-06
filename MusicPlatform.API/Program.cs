@@ -1,4 +1,6 @@
 using System.Text;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,11 +8,21 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MusicPlatform.Business.Extensions;
 using MusicPlatform.Business.Options;
+using MusicPlatform.Business.Services.Abstract;
 using MusicPlatform.DAL.Context;
 using MusicPlatform.DAL.Seed;
 using MusicPlatform.Entity.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ------------------------------------------------------- Mutlak yol ayarları
+// Business katmanı IHostEnvironment görmediği için yolları burada çözüyoruz.
+builder.Configuration["MusicSettings:ResolvedMusicPath"] = Path.Combine(
+    builder.Environment.ContentRootPath,
+    builder.Configuration["MusicSettings:MusicFolder"] ?? "App_Data/Music");
+
+builder.Configuration["MusicSettings:ResolvedAvatarPath"] = Path.Combine(
+    builder.Environment.ContentRootPath, "wwwroot/avatars");
 
 // ------------------------------------------------------------------ Database
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -32,6 +44,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
+
+// Şifre sıfırlama / e-posta doğrulama token'larının ömrü
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+    options.TokenLifespan = TimeSpan.FromHours(1));
 
 // ----------------------------------------------------------------- JWT setup
 var jwt = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
@@ -66,6 +82,25 @@ builder.Services.AddBusinessServices(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// ------------------------------------------------------------------ Hangfire
+builder.Services.AddHangfire(config => config
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new SqlServerStorageOptions
+        {
+            CommandBatchMaxTimeout       = TimeSpan.FromMinutes(5),
+            SlidingInvisibilityTimeout   = TimeSpan.FromMinutes(5),
+            QueuePollInterval            = TimeSpan.Zero,
+            UseRecommendedIsolationLevel = true,
+            DisableGlobalLocks           = true
+        }));
+
+builder.Services.AddHangfireServer();
+
+// ------------------------------------------------------- Swagger + JWT butonu
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "MusicPlatform API", Version = "v1" });
@@ -105,13 +140,11 @@ using (var scope = app.Services.CreateScope())
     var context = sp.GetRequiredService<AppDbContext>();
     var userManager = sp.GetRequiredService<UserManager<AppUser>>();
 
-    var musicFolder = Path.Combine(
-        app.Environment.ContentRootPath,
-        builder.Configuration["MusicSettings:MusicFolder"]!);
+    var musicFolder = builder.Configuration["MusicSettings:ResolvedMusicPath"]!;
 
     var coverFolder = Path.Combine(
         app.Environment.ContentRootPath,
-        builder.Configuration["MusicSettings:CoverFolder"]!);
+        builder.Configuration["MusicSettings:CoverFolder"] ?? "wwwroot/covers");
 
     await DbSeeder.SeedAsync(context, userManager, musicFolder, coverFolder);
 }
@@ -127,6 +160,19 @@ app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// --------------------------------------------------------- Hangfire dashboard
+app.UseHangfireDashboard("/hangfire");
+
+RecurringJob.AddOrUpdate<INotificationService>(
+    "paket-bitis-hatirlatma",
+    svc => svc.SendExpiryRemindersAsync(),
+    Cron.Daily(9));
+
+RecurringJob.AddOrUpdate<INotificationService>(
+    "haftalik-oneri-bulteni",
+    svc => svc.SendWeeklyRecommendationsAsync(),
+    Cron.Weekly(DayOfWeek.Monday, 10));
 
 app.MapControllers();
 

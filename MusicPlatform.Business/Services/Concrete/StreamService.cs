@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using MusicPlatform.Business.Services.Abstract;
 using MusicPlatform.DAL.Context;
 using MusicPlatform.Entity.Concrete;
@@ -12,12 +11,12 @@ public class StreamService : IStreamService
     private readonly AppDbContext _context;
     private readonly string _musicFolder;
 
-    public StreamService(AppDbContext context, IConfiguration config, IHostEnvironment env)
+    public StreamService(AppDbContext context, IConfiguration config)
     {
         _context = context;
-        _musicFolder = Path.Combine(
-            env.ContentRootPath,
-            config["MusicSettings:MusicFolder"] ?? "App_Data/Music");
+
+        _musicFolder = config["MusicSettings:ResolvedMusicPath"]
+                       ?? Path.Combine(Directory.GetCurrentDirectory(), "App_Data/Music");
     }
 
     public string? ResolvePhysicalPath(string fileName)

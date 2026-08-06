@@ -59,4 +59,21 @@ public class AuthController : ControllerBase
             PackageName = User.FindFirstValue("packageName")
         });
     }
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        => Ok(await _authService.ForgotPasswordAsync(dto));
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+    {
+        var result = await _authService.ResetPasswordAsync(dto);
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
+    [HttpPost("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailDto dto)
+    {
+        var result = await _authService.ConfirmEmailAsync(dto);
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
 }

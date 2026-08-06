@@ -9,4 +9,7 @@ public interface IAuthService
     Task<ApiResponse<TokenResponseDto>> LoginAsync(LoginDto dto, string? ip = null);
     Task<ApiResponse<TokenResponseDto>> RefreshAsync(string refreshToken, string? ip = null);
     Task<ApiResponse> LogoutAsync(int userId);
+    Task<ApiResponse> ForgotPasswordAsync(ForgotPasswordDto dto);
+    Task<ApiResponse> ResetPasswordAsync(ResetPasswordDto dto);
+    Task<ApiResponse> ConfirmEmailAsync(ConfirmEmailDto dto);
 }

@@ -7,11 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.24" />
+        <PackageReference Include="Hangfire.SqlServer" Version="1.8.24" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.29" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="App_Data\avatars\" />
       <Folder Include="wwwroot\covers\" />
     </ItemGroup>
 
