@@ -1,0 +1,23 @@
+@model List<MusicPlatform.Shared.DTOs.Song.SongListDto>
+@{ ViewData["Title"] = "Favorilerim"; }
+
+<div class="page-container padding">
+    <h4 class="text-white mb-4">Favorilerim</h4>
+
+    @if (Model.Any())
+    {
+        <div class="row" data-playlist="favorites">
+            @foreach (var song in Model)
+            {
+                <partial name="_SongCard" model="song" />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="h5 text-white mb-2">Henüz favorin yok</div>
+            <div>Beğendiğin şarkıların kalp ikonuna tıkla.</div>
+        </div>
+    }
+</div>

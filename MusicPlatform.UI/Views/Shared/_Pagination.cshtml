@@ -1,0 +1,61 @@
+@model dynamic
+@{
+    int page  = Model.Page;
+    int total = Model.TotalPages;
+
+    if (total <= 1) { return; }
+
+    int start = Math.Max(1, page - 2);
+    int end   = Math.Min(total, start + 4);
+    start     = Math.Max(1, end - 4);
+
+    var query = Context.Request.Query
+        .Where(q => q.Key != "page")
+        .ToDictionary(q => q.Key, q => q.Value.ToString());
+
+    string Url(int p)
+    {
+        var parts = query.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}").ToList();
+        parts.Add($"page={p}");
+        return "?" + string.Join("&", parts);
+    }
+}
+
+<nav class="mt-5">
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item @(page <= 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url(page - 1)">&laquo;</a>
+        </li>
+
+        @if (start > 1)
+        {
+            <li class="page-item"><a class="page-link" href="@Url(1)">1</a></li>
+            @if (start > 2)
+            {
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            }
+        }
+
+        @for (int i = start; i <= end; i++)
+        {
+            <li class="page-item @(i == page ? "active" : "")">
+                <a class="page-link" href="@Url(i)">@i</a>
+            </li>
+        }
+
+        @if (end < total)
+        {
+            @if (end < total - 1)
+            {
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            }
+            <li class="page-item"><a class="page-link" href="@Url(total)">@total</a></li>
+        }
+
+        <li class="page-item @(page >= total ? "disabled" : "")">
+            <a class="page-link" href="@Url(page + 1)">&raquo;</a>
+        </li>
+
+    </ul>
+</nav>

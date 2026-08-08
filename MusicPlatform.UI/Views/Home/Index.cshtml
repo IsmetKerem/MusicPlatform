@@ -1,8 +1,108 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MusicPlatform.UI.Models.HomeViewModel
+@inject CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "Keşfet";
+    var playableCount = Model.Popular.Count(s => s.CanPlay);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="page-container padding">
+
+    @* --------------------------------------------------- Karsilama *@
+    <div class="d-flex align-items-end mb-5">
+        <div>
+            <h2 class="text-white mb-1">Merhaba, @CurrentUser.FullName.Split(' ')[0]</h2>
+            <div class="text-muted">
+                <span class="badge badge-pill pkg-@CurrentUser.PackageLevel px-2">@CurrentUser.PackageName</span>
+                paketiyle dinliyorsun
+            </div>
+        </div>
+        <span class="flex"></span>
+        @if (CurrentUser.PackageLevel < 4)
+        {
+            <a asp-controller="Packages" asp-action="Index" class="btn btn-sm btn-rounded btn-outline-primary">
+                Paketini yükselt
+            </a>
+        }
+    </div>
+
+    @* ------------------------------------------------ Sana ozel *@
+    @if (Model.Recommendations.Any())
+    {
+        <div class="d-flex align-items-center mb-3">
+            <h5 class="text-white m-0">Sana özel</h5>
+            <span class="text-muted text-sm ml-3">dinleme geçmişine göre</span>
+        </div>
+
+        <div class="row" data-playlist="recommendations">
+            @foreach (var song in Model.Recommendations)
+            {
+                <partial name="_SongCard" model="@((SongListDto)song)" />
+            }
+        </div>
+
+        <div class="my-5"></div>
+    }
+
+    @* ------------------------------------------------ Populer *@
+    @if (Model.Popular.Any())
+    {
+        <div class="d-flex align-items-center mb-3">
+            <h5 class="text-white m-0">En çok dinlenenler</h5>
+            <span class="flex"></span>
+            <a asp-controller="Songs" asp-action="Index" asp-route-sortBy="2" class="text-sm text-muted">
+                Tümünü gör
+            </a>
+        </div>
+
+        <div class="row" data-playlist="popular">
+            @foreach (var song in Model.Popular)
+            {
+                <partial name="_SongCard" model="song" />
+            }
+        </div>
+
+        <div class="my-5"></div>
+    }
+
+    @* ------------------------------------------------ Turler *@
+    @if (Model.Genres.Any())
+    {
+        <h5 class="text-white mb-3">Türler</h5>
+
+        <div class="row mb-5">
+            @foreach (var genre in Model.Genres)
+            {
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <a asp-controller="Genres" asp-action="Detail" asp-route-id="@genre.Id"
+                       class="d-block p-4 rounded pos-rlt overflow-hidden"
+                       style="background: linear-gradient(135deg, @genre.ColorHex, @(genre.ColorHex)44); min-height:110px">
+                        <div class="text-white h5 mb-1">@genre.Name</div>
+                        <div class="text-white-50 text-sm">@genre.SongCount şarkı</div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+    @* ------------------------------------------------ Yeni eklenenler *@
+    @if (Model.Newest.Any())
+    {
+        <h5 class="text-white mb-3">Yeni eklenenler</h5>
+
+        <div class="row" data-playlist="newest">
+            @foreach (var song in Model.Newest)
+            {
+                <partial name="_SongCard" model="song" />
+            }
+        </div>
+    }
+
+    @if (!Model.Popular.Any() && !Model.Newest.Any())
+    {
+        <div class="empty-state">
+            <div class="h5 text-white mb-2">Henüz şarkı yok</div>
+            <div>API tarafında seed verisinin yüklendiğinden emin ol.</div>
+        </div>
+    }
+
 </div>

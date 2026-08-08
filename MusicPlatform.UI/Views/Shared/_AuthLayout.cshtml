@@ -15,8 +15,11 @@
 <div class="d-flex flex-column flex">
     <div class="row no-gutters h-100">
 
-        <div class="col-md-6 bg-dark bg-img d-none d-md-block"
-             style="background-image:url(/Bepop/assets/img/b6.jpg)">
+        @{
+            var heroIndex = Random.Shared.Next(1, 4);
+        }
+        <div class="col-md-6 d-none d-md-block bg-dark"
+             style="background-image:url('/img/auth-@(heroIndex).jpg');background-size:cover;background-position:center">
             <div class="p-3 p-md-5 d-flex flex-column h-100">
                 <h4 class="mb-3 text-white">MusicPlatform</h4>
                 <div class="text-fade">JWT tabanlı müzik dinleme sistemi</div>

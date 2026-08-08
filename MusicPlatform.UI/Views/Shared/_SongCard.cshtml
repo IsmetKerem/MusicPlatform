@@ -1,0 +1,72 @@
+@model MusicPlatform.Shared.DTOs.Song.SongListDto
+@{
+    var apiBase = ApiOptions.Value.BaseUrl;
+    var hasCover = !string.IsNullOrEmpty(Model.CoverImageUrl);
+}
+
+<div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-4 song-item @(Model.CanPlay ? "" : "song-locked")"
+     data-song-id="@Model.Id"
+     data-song-title="@Model.Title"
+     data-song-artist="@Model.ArtistName"
+     data-song-cover="@(hasCover ? apiBase + Model.CoverImageUrl : "")"
+     data-song-duration="@Model.DurationInSeconds"
+     data-can-play="@Model.CanPlay.ToString().ToLower()"
+     data-required-package="@Model.RequiredPackageName">
+
+    <div class="item r pos-rlt">
+
+        @if (Model.RequiredPackage > 1)
+        {
+            <span class="package-lock-badge pkg-@Model.RequiredPackage">@Model.RequiredPackageName</span>
+        }
+
+        <div class="item-media item-media-4by3">
+            @if (hasCover)
+            {
+                <div class="item-media-content"
+                     style="background-image:url('@apiBase@Model.CoverImageUrl')"></div>
+            }
+            else
+            {
+                <div class="item-media-content letter-cover letter-cover-lg"
+                     style="@CoverHelper.GradientStyle(Model.ArtistName)">
+                    @CoverHelper.InitialsOf(Model.ArtistName)
+                </div>
+            }
+
+            <div class="item-overlay center">
+                <button class="btn-play btn btn-icon btn-rounded btn-white"
+                        type="button"
+                        title="@(Model.CanPlay ? "Çal" : Model.RequiredPackageName + " paketi gerekli")">
+                    @if (Model.CanPlay)
+                    {
+                        <i data-feather="play" style="width:18px;height:18px"></i>
+                    }
+                    else
+                    {
+                        <i data-feather="lock" style="width:16px;height:16px"></i>
+                    }
+                </button>
+            </div>
+        </div>
+
+        <div class="item-info pt-2">
+            <div class="item-title text-ellipsis">
+                <a asp-controller="Songs" asp-action="Detail" asp-route-id="@Model.Id"
+                   class="text-white">@Model.Title</a>
+            </div>
+            <div class="item-author text-sm text-muted text-ellipsis">
+                <a asp-controller="Artists" asp-action="Detail" asp-route-id="@Model.ArtistId"
+                   class="text-muted">@Model.ArtistName</a>
+            </div>
+            <div class="d-flex align-items-center mt-1">
+                <span class="text-xs text-muted">@Model.DurationDisplay</span>
+                <span class="flex"></span>
+                <button class="btn btn-sm btn-icon btn-favorite p-0"
+                        data-song-id="@Model.Id" title="Favorilere ekle">
+                    <i data-feather="heart" style="width:14px;height:14px"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

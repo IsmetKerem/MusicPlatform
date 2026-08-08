@@ -1,31 +1,49 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using MusicPlatform.Shared.Common;
+using MusicPlatform.Shared.DTOs.Genre;
+using MusicPlatform.Shared.DTOs.Song;
+using MusicPlatform.UI.Filters;
 using MusicPlatform.UI.Models;
+using MusicPlatform.UI.Services;
 
 namespace MusicPlatform.UI.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IApiClient _api;
+    private readonly ITokenStore _tokenStore;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IApiClient api, ITokenStore tokenStore)
     {
-        _logger = logger;
+        _api = api;
+        _tokenStore = tokenStore;
     }
 
-    public IActionResult Index()
+    [RequireLogin]
+    public async Task<IActionResult> Index()
     {
+        var popularTask = _api.GetAsync<List<SongListDto>>("/api/songs/popular?count=12");
+        var recTask     = _api.GetAsync<List<RecommendedSongDto>>("/api/recommendations/for-me?count=12");
+        var genreTask   = _api.GetAsync<List<GenreListDto>>("/api/genres");
+        var newestTask  = _api.GetAsync<PagedResult<SongListDto>>("/api/songs?sortBy=3&pageSize=12");
+
+        await Task.WhenAll(popularTask, recTask, genreTask, newestTask);
+
+        var model = new HomeViewModel
+        {
+            Popular         = popularTask.Result.Data ?? new(),
+            Recommendations = recTask.Result.Data ?? new(),
+            Genres          = genreTask.Result.Data ?? new(),
+            Newest          = newestTask.Result.Data?.Items ?? new()
+        };
+
+        return View(model);
+    }
+
+    [Route("/Home/Error/{code:int?}")]
+    public IActionResult Error(int? code)
+    {
+        ViewData["StatusCode"] = code ?? 500;
         return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

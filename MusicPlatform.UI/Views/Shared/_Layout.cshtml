@@ -177,26 +177,54 @@
 @* ---------------------------------------------------------- Player *@
 @if (TokenStore.IsAuthenticated)
 {
-    <div data-plugin="plyr"
-         class="plyrist plyrist_audio plyr-list-popup player bg-overlay b-t fixed-bottom"
-         id="plyrist">
-        <audio controls hidden></audio>
-        <div class="plyr-list bg-dark-overlay" style="display:none"></div>
+    <div id="mp-player" class="mp-player">
+        <audio preload="metadata"></audio>
+
+        <div class="mp-player-inner">
+
+            <div class="mp-now d-flex align-items-center">
+                <div class="mp-cover"></div>
+                <div class="mp-meta ml-3 text-ellipsis">
+                    <div class="mp-title text-white text-ellipsis">Bir şarkı seçin</div>
+                    <div class="mp-artist text-muted text-sm text-ellipsis">—</div>
+                </div>
+            </div>
+
+            <div class="mp-controls">
+                <div class="d-flex align-items-center justify-content-center">
+                    <button class="mp-prev btn btn-icon btn-sm" type="button" title="Önceki">
+                        <i data-feather="skip-back"></i>
+                    </button>
+                    <button class="mp-play btn btn-icon btn-rounded btn-primary mx-3" type="button" title="Çal / Duraklat">
+                        <i data-feather="play"></i>
+                    </button>
+                    <button class="mp-next btn btn-icon btn-sm" type="button" title="Sonraki">
+                        <i data-feather="skip-forward"></i>
+                    </button>
+                </div>
+
+                <div class="d-flex align-items-center mt-1">
+                    <span class="mp-current text-xs text-muted">0:00</span>
+                    <input type="range" class="mp-seek custom-range mx-2" min="0" max="100" value="0" />
+                    <span class="mp-duration text-xs text-muted">0:00</span>
+                </div>
+            </div>
+
+            <div class="mp-extra d-none d-md-flex align-items-center justify-content-end">
+                <i data-feather="volume-2" class="text-muted mr-2" style="width:16px;height:16px"></i>
+                <input type="range" class="mp-volume custom-range" min="0" max="100" value="100" style="max-width:90px" />
+            </div>
+
+        </div>
     </div>
 }
 
 <script src="~/Bepop/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/Bepop/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="~/Bepop/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="~/Bepop/assets/js/lazyload.config.js"></script>
-<script src="~/Bepop/assets/js/lazyload.js"></script>
-<script src="~/Bepop/assets/js/plugin.js"></script>
-<script src="~/Bepop/libs/scrollreveal/dist/scrollreveal.min.js"></script>
-<script src="~/Bepop/libs/slick-carousel/slick/slick.min.js"></script>
 <script src="~/Bepop/libs/feather-icons/dist/feather.min.js"></script>
-<script src="~/Bepop/assets/js/theme.js"></script>
-<script src="~/js/player.js" asp-append-version="true"></script>
 <script src="~/js/app.js" asp-append-version="true"></script>
+<script src="~/js/player.js" asp-append-version="true"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 

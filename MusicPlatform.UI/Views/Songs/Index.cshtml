@@ -1,0 +1,114 @@
+@model MusicPlatform.UI.Models.SongListViewModel
+@inject CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "Şarkılar";
+    var packages = new[] { (1, "Basic"), (2, "Gold"), (3, "Premium"), (4, "Elit") };
+    var sorts = new[] { (0, "Şarkı adı"), (1, "Sanatçı"), (2, "En çok dinlenen"), (3, "En yeni"), (4, "Süre") };
+}
+
+<div class="page-container padding">
+
+    <div class="d-flex align-items-center mb-4">
+        <div>
+            <h4 class="text-white mb-1">
+                @if (!string.IsNullOrWhiteSpace(Model.Search))
+                {
+                    <text>"@Model.Search" için sonuçlar</text>
+                }
+                else
+                {
+                    <text>Tüm Şarkılar</text>
+                }
+            </h4>
+            <div class="text-muted text-sm">@Model.Result.TotalCount şarkı bulundu</div>
+        </div>
+    </div>
+
+    @* --------------------------------------------------------- Filtreler *@
+    <form method="get" id="filterForm" class="mb-4">
+        <div class="row no-gutters align-items-center">
+
+            <div class="col-md-4 mb-2 pr-md-2">
+                <input type="text" name="search" value="@Model.Search"
+                       class="form-control bg-dark-overlay border-0"
+                       placeholder="Şarkı veya sanatçı ara..." />
+            </div>
+
+            <div class="col-6 col-md-2 mb-2 pr-2">
+                <select name="genreId" class="form-control bg-dark-overlay border-0" onchange="this.form.submit()">
+                    <option value="">Tüm türler</option>
+                    @foreach (var g in Model.Genres)
+                    {
+                        <option value="@g.Id" selected="@(Model.GenreId == g.Id)">@g.Name (@g.SongCount)</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-6 col-md-2 mb-2 pr-2">
+                <select name="requiredPackage" class="form-control bg-dark-overlay border-0" onchange="this.form.submit()">
+                    <option value="">Tüm paketler</option>
+                    @foreach (var (level, name) in packages)
+                    {
+                        <option value="@level" selected="@(Model.RequiredPackage == level)">@name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-6 col-md-2 mb-2 pr-2">
+                <select name="sortBy" class="form-control bg-dark-overlay border-0" onchange="this.form.submit()">
+                    @foreach (var (value, name) in sorts)
+                    {
+                        <option value="@value" selected="@(Model.SortBy == value)">@name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-6 col-md-2 mb-2">
+                <label class="ui-check m-0 text-sm text-muted d-flex align-items-center">
+                    <input type="checkbox" name="onlyPlayable" value="true"
+                           checked="@Model.OnlyPlayable" onchange="this.form.submit()" />
+                    <i></i> Dinleyebildiklerim
+                </label>
+            </div>
+
+        </div>
+    </form>
+
+    @* ------------------------------------------------------------ Liste *@
+    @if (Model.Result.Items.Any())
+    {
+        <div class="row" data-playlist="songs">
+            @foreach (var song in Model.Result.Items)
+            {
+                <partial name="_SongCard" model="song" />
+            }
+        </div>
+
+        <partial name="_Pagination" model="Model.Result" />
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="h5 text-white mb-2">Sonuç bulunamadı</div>
+            <div>Farklı bir arama veya filtre deneyin.</div>
+            <a asp-action="Index" class="btn btn-sm btn-outline-primary btn-rounded mt-3">Filtreleri temizle</a>
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <script>
+        // Arama kutusunda yazarken bekle, sonra gonder
+        (function () {
+            const input = document.querySelector('input[name="search"]');
+            if (!input) return;
+
+            let timer;
+            input.addEventListener('input', function () {
+                clearTimeout(timer);
+                timer = setTimeout(() => input.form.submit(), 600);
+            });
+        })();
+    </script>
+}

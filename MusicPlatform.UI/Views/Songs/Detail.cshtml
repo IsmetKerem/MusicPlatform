@@ -1,0 +1,300 @@
+@model MusicPlatform.UI.Models.SongDetailViewModel
+@inject CurrentUser CurrentUser
+@{
+    var song = Model.Song;
+    ViewData["Title"] = song.Title;
+    var apiBase = ApiOptions.Value.BaseUrl;
+    var hasCover = !string.IsNullOrEmpty(song.CoverImageUrl);
+}
+
+<div class="page-container padding">
+    <div class="row">
+
+        @* ================================================== SOL: Sarki *@
+        <div class="col-lg-8">
+
+            <div class="d-flex flex-column flex-sm-row mb-5">
+
+                <div class="mr-sm-4 mb-3 mb-sm-0">
+                    <div class="song-hero-cover rounded @(song.CanPlay ? "" : "song-locked")">
+                        @if (hasCover)
+                        {
+                            <div class="song-hero-img" style="background-image:url('@apiBase@song.CoverImageUrl')"></div>
+                        }
+                        else
+                        {
+                            <div class="song-hero-img letter-cover"
+                                 style="@CoverHelper.GradientStyle(song.ArtistName);font-size:3.5rem">
+                                @CoverHelper.InitialsOf(song.ArtistName)
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="flex d-flex flex-column justify-content-center"
+                     data-playlist="detail">
+
+                    <div class="mb-2">
+                        <span class="badge badge-pill pkg-@song.RequiredPackage px-2">
+                            @song.RequiredPackageName
+                        </span>
+                        @foreach (var genre in song.Genres)
+                        {
+                            <span class="badge badge-pill badge-dark px-2 ml-1">@genre</span>
+                        }
+                    </div>
+
+                    <h3 class="text-white mb-2">@song.Title</h3>
+
+                    <div class="mb-3">
+                        <a asp-controller="Artists" asp-action="Detail" asp-route-id="@song.ArtistId"
+                           class="text-muted h6">@song.ArtistName</a>
+                        @if (!string.IsNullOrEmpty(song.AlbumTitle))
+                        {
+                            <span class="text-muted mx-2">·</span>
+                            <span class="text-muted">@song.AlbumTitle</span>
+                        }
+                    </div>
+
+                    <div class="text-muted text-sm mb-4">
+                        @song.DurationDisplay
+                        <span class="mx-2">·</span>
+                        @song.PlayCount.ToString("N0") kez dinlendi
+                    </div>
+
+                    @* Play butonu: karttakiyle ayni data sozlesmesi *@
+                    <div class="d-flex align-items-center song-item @(song.CanPlay ? "" : "song-locked")"
+                         data-song-id="@song.Id"
+                         data-song-title="@song.Title"
+                         data-song-artist="@song.ArtistName"
+                         data-song-cover="@(hasCover ? apiBase + song.CoverImageUrl : "")"
+                         data-song-duration="@song.DurationInSeconds"
+                         data-can-play="@song.CanPlay.ToString().ToLower()"
+                         data-required-package="@song.RequiredPackageName">
+
+                        <button class="btn-play btn btn-primary btn-rounded px-4" type="button">
+                            @if (song.CanPlay)
+                            {
+                                <i data-feather="play" style="width:16px;height:16px"></i>
+                                <span class="ml-2">Çal</span>
+                            }
+                            else
+                            {
+                                <i data-feather="lock" style="width:16px;height:16px"></i>
+                                <span class="ml-2">@song.RequiredPackageName gerekli</span>
+                            }
+                        </button>
+
+                        <button class="btn btn-icon btn-rounded btn-favorite ml-2" data-song-id="@song.Id">
+                            <i data-feather="heart" style="width:18px;height:18px"></i>
+                        </button>
+
+                        <button class="btn btn-icon btn-rounded ml-2" type="button"
+                                data-toggle="modal" data-target="#addToPlaylistModal"
+                                data-song-id="@song.Id" title="Playlist'e ekle">
+                            <i data-feather="plus" style="width:18px;height:18px"></i>
+                        </button>
+                    </div>
+
+                    @if (!song.CanPlay)
+                    {
+                        <div class="alert alert-warning bg-dark-overlay border-0 mt-4 mb-0 py-2 px-3 text-sm">
+                            Bu şarkı <strong>@song.RequiredPackageName</strong> paketine ait.
+                            Şu an <strong>@CurrentUser.PackageName</strong> paketindesin.
+                            <a asp-controller="Packages" asp-action="Index" class="text-primary ml-1">Yükselt</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @* -------------------------------- Ayni sanatcinin diger sarkilari *@
+            @if (Model.MoreFromArtist.Any())
+            {
+                <h6 class="text-white mb-3">@song.ArtistName'in diğer şarkıları</h6>
+
+                <div class="row" data-playlist="artist-more">
+                    @foreach (var other in Model.MoreFromArtist)
+                    {
+                        <partial name="_SongCard" model="other" />
+                    }
+                </div>
+            }
+
+        </div>
+
+        @* ============================================ SAG: Onerilenler *@
+        <div class="col-lg-4">
+            <div class="pl-lg-3">
+
+                <div class="d-flex align-items-center mb-3">
+                    <h6 class="text-white m-0">Önerilenler</h6>
+                </div>
+
+                @if (Model.Recommendations.Any())
+                {
+                    <div class="list-group bg-transparent" data-playlist="recommendations">
+                        @foreach (var rec in Model.Recommendations)
+                        {
+                            var recHasCover = !string.IsNullOrEmpty(rec.CoverImageUrl);
+
+                            <div class="rec-item song-item d-flex align-items-center p-2 rounded mb-1 @(rec.CanPlay ? "" : "song-locked")"
+                                 data-song-id="@rec.Id"
+                                 data-song-title="@rec.Title"
+                                 data-song-artist="@rec.ArtistName"
+                                 data-song-cover="@(recHasCover ? apiBase + rec.CoverImageUrl : "")"
+                                 data-song-duration="@rec.DurationInSeconds"
+                                 data-can-play="@rec.CanPlay.ToString().ToLower()"
+                                 data-required-package="@rec.RequiredPackageName">
+
+                                <div class="rec-cover pos-rlt">
+                                    @if (recHasCover)
+                                    {
+                                        <div class="rec-cover-img" style="background-image:url('@apiBase@rec.CoverImageUrl')"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="rec-cover-img letter-cover letter-cover-sm"
+                                             style="@CoverHelper.GradientStyle(rec.ArtistName)">
+                                            @CoverHelper.InitialsOf(rec.ArtistName)
+                                        </div>
+                                    }
+
+                                    <button class="btn-play rec-play" type="button">
+                                        @if (rec.CanPlay)
+                                        {
+                                            <i data-feather="play" style="width:14px;height:14px"></i>
+                                        }
+                                        else
+                                        {
+                                            <i data-feather="lock" style="width:12px;height:12px"></i>
+                                        }
+                                    </button>
+                                </div>
+
+                                <div class="flex ml-3 min-w-0">
+                                    <div class="text-white text-sm text-ellipsis">
+                                        <a asp-action="Detail" asp-route-id="@rec.Id" class="text-white">@rec.Title</a>
+                                    </div>
+                                    <div class="text-muted text-xs text-ellipsis">@rec.ArtistName</div>
+
+                                    @if (!string.IsNullOrEmpty(rec.Reason))
+                                    {
+                                        <div class="rec-reason text-xs mt-1">@rec.Reason</div>
+                                    }
+                                </div>
+
+                                @if (rec.RequiredPackage > 1)
+                                {
+                                    <span class="badge badge-pill pkg-@rec.RequiredPackage ml-2 px-2">
+                                        @rec.RequiredPackageName
+                                    </span>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="text-muted text-xs mt-3 px-2">
+                        Öneriler, bu şarkıyı dinleyen diğer kullanıcıların dinleme
+                        alışkanlıklarına göre hesaplanıyor.
+                    </div>
+                }
+                else
+                {
+                    <div class="text-muted text-sm p-3 rounded bg-dark-overlay">
+                        Bu şarkı için henüz yeterli dinleme verisi yok.
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@* ------------------------------------------------ Playlist'e ekle modal *@
+<div class="modal fade" id="addToPlaylistModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+            <div class="modal-header border-0">
+                <h6 class="modal-title text-white">Playlist'e ekle</h6>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="playlistPickerBody">
+                <div class="text-muted text-sm">Yükleniyor...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .song-hero-cover { width: 220px; height: 220px; overflow: hidden; }
+        .song-hero-img {
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            background-color: #241f38;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .rec-item { transition: background .2s; }
+        .rec-item:hover { background: rgba(255,255,255,.04); }
+
+        .rec-cover { width: 46px; height: 46px; flex-shrink: 0; }
+        .rec-cover-img {
+            width: 100%; height: 100%;
+            border-radius: 6px;
+            background-size: cover; background-position: center;
+            background-color: #241f38;
+        }
+
+        .rec-play {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            border: 0; border-radius: 6px;
+            background: rgba(20,18,31,.55);
+            color: #fff;
+            opacity: 0; transition: opacity .2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .rec-item:hover .rec-play { opacity: 1; }
+
+        .rec-reason {
+            color: #6c4df6;
+            line-height: 1.3;
+        }
+
+        .min-w-0 { min-width: 0; }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $('#addToPlaylistModal').on('show.bs.modal', function (e) {
+            const songId = @song.Id;
+            const body = document.getElementById('playlistPickerBody');
+            body.innerHTML = '<div class="text-muted text-sm">Yükleniyor...</div>';
+
+            fetch('/Playlists/Mine')
+                .then(r => r.json())
+                .then(res => {
+                    if (!res.success || !res.data || res.data.length === 0) {
+                        body.innerHTML = `
+                            <div class="text-muted text-sm mb-3">Henüz playlist'in yok.</div>
+                            <a href="/Playlists" class="btn btn-sm btn-primary btn-rounded">Playlist oluştur</a>`;
+                        return;
+                    }
+
+                    body.innerHTML = res.data.map(p => `
+                        <button class="btn btn-block text-left bg-dark-overlay border-0 mb-2 d-flex align-items-center"
+                                onclick="MP.addToPlaylist(${p.id}, ${songId}, this)">
+                            <span class="flex text-white">${p.name}</span>
+                            <span class="text-muted text-xs">${p.songCount} şarkı</span>
+                        </button>`).join('');
+                })
+                .catch(() => {
+                    body.innerHTML = '<div class="text-danger text-sm">Playlistler yüklenemedi.</div>';
+                });
+        });
+    </script>
+}
