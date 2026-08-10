@@ -1,0 +1,101 @@
+@model MusicPlatform.UI.Models.ArtistListViewModel
+@{
+    ViewData["Title"] = "Sanatçılar";
+    var apiBase = ApiOptions.Value.BaseUrl;
+}
+
+<div class="page-container padding">
+
+    <div class="d-flex align-items-center flex-wrap mb-4">
+        <div>
+            <h4 class="text-white mb-1">Sanatçılar</h4>
+            <div class="text-muted text-sm">@Model.Result.TotalCount sanatçı</div>
+        </div>
+        <span class="flex"></span>
+        <form method="get" style="min-width:260px">
+            <input type="text" name="search" value="@Model.Search"
+                   class="form-control bg-dark-overlay border-0"
+                   placeholder="Sanatçı ara..." />
+        </form>
+    </div>
+
+    @if (Model.Result.Items.Any())
+    {
+        <div class="row">
+            @foreach (var artist in Model.Result.Items)
+            {
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-4">
+                    <a asp-action="Detail" asp-route-id="@artist.Id" class="artist-card d-block text-center">
+
+                        <div class="artist-avatar mx-auto mb-3">
+                            @if (!string.IsNullOrEmpty(artist.ImageUrl))
+                            {
+                                <div class="artist-avatar-img"
+                                     style="background-image:url('@apiBase@artist.ImageUrl')"></div>
+                            }
+                            else
+                            {
+                                <div class="artist-avatar-img letter-cover"
+                                     style="@CoverHelper.GradientStyle(artist.Name);font-size:1.8rem">
+                                    @CoverHelper.InitialsOf(artist.Name)
+                                </div>
+                            }
+                        </div>
+
+                        <div class="text-white text-ellipsis">@artist.Name</div>
+                        <div class="text-muted text-xs mt-1">
+                            @artist.SongCount şarkı
+                            @if (artist.TotalPlayCount > 0)
+                            {
+                                <span class="mx-1">·</span>
+                                <span>@FormatCount(artist.TotalPlayCount)</span>
+                            }
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <partial name="_Pagination" model="Model.Result" />
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="h5 text-white mb-2">Sanatçı bulunamadı</div>
+            <div>Farklı bir arama deneyin.</div>
+        </div>
+    }
+
+</div>
+
+@section Styles {
+    <style>
+        .artist-avatar { width: 130px; height: 130px; max-width: 100%; }
+
+        .artist-avatar-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-color: #241f38;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .artist-card:hover .artist-avatar-img {
+            transform: scale(1.06);
+            box-shadow: 0 8px 28px rgba(0,0,0,.4);
+        }
+
+        .artist-card:hover .text-white { color: #6c4df6 !important; }
+    </style>
+}
+
+@functions {
+    string FormatCount(long n) => n switch
+    {
+        >= 1_000_000 => $"{n / 1_000_000.0:0.#}M dinlenme",
+        >= 1_000     => $"{n / 1_000.0:0.#}K dinlenme",
+        _            => $"{n} dinlenme"
+    };
+}

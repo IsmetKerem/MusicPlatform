@@ -1,0 +1,180 @@
+@model MusicPlatform.UI.Models.PurchaseViewModel
+@inject CurrentUser CurrentUser
+@{
+    var pkg = ViewBag.Package as MusicPlatform.Shared.DTOs.Package.PackageInfoDto;
+    ViewData["Title"] = $"{pkg?.Name} paketine geç";
+    var currentYear = DateTime.Now.Year;
+}
+
+<div class="page-container padding">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <div class="mb-4">
+                <a asp-action="Index" class="text-muted text-sm">&laquo; Paketlere dön</a>
+                <h4 class="text-white mt-2">Ödeme</h4>
+            </div>
+
+            <div class="row">
+
+                @* ------------------------------------------------- Form *@
+                <div class="col-md-7">
+                    <div class="p-4 rounded bg-dark-overlay">
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 px-3 text-sm"></div>
+
+                        <form asp-action="Checkout" method="post" id="checkoutForm">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" asp-for="TargetPackageLevel" />
+
+                            <div class="form-group">
+                                <label asp-for="DurationInDays"></label>
+                                <select asp-for="DurationInDays" class="form-control" id="durationSelect">
+                                    <option value="30">1 ay</option>
+                                    <option value="90">3 ay</option>
+                                    <option value="180">6 ay</option>
+                                    <option value="365">12 ay</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CardHolderName"></label>
+                                <input asp-for="CardHolderName" class="form-control"
+                                       placeholder="Ad Soyad" value="@CurrentUser.FullName" />
+                                <span asp-validation-for="CardHolderName" class="text-danger text-sm"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CardNumber"></label>
+                                <input asp-for="CardNumber" class="form-control" id="cardNumber"
+                                       placeholder="0000 0000 0000 0000" inputmode="numeric" maxlength="23" />
+                                <span asp-validation-for="CardNumber" class="text-danger text-sm"></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label asp-for="ExpiryMonth"></label>
+                                        <select asp-for="ExpiryMonth" class="form-control">
+                                            @for (int m = 1; m <= 12; m++)
+                                            {
+                                                <option value="@m.ToString("00")">@m.ToString("00")</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label asp-for="ExpiryYear"></label>
+                                        <select asp-for="ExpiryYear" class="form-control">
+                                            @for (int y = currentYear; y <= currentYear + 10; y++)
+                                            {
+                                                <option value="@y">@y</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label asp-for="Cvv"></label>
+                                        <input asp-for="Cvv" class="form-control" placeholder="123"
+                                               inputmode="numeric" maxlength="4" />
+                                        <span asp-validation-for="Cvv" class="text-danger text-sm"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block btn-rounded mt-3">
+                                Ödemeyi Tamamla
+                            </button>
+                        </form>
+
+                        <div class="alert alert-info bg-dark border-0 mt-4 mb-0 py-2 px-3 text-sm">
+                            <strong>Demo ödeme.</strong> Gerçek bir ödeme sağlayıcısına bağlanmıyor.
+                            Kart numarası Luhn algoritmasıyla doğrulanıyor.
+                            Test için: <code>4242 4242 4242 4242</code>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* ----------------------------------------------- Ozet *@
+                <div class="col-md-5 mt-4 mt-md-0">
+                    <div class="p-4 rounded bg-dark-overlay">
+                        <h6 class="text-white mb-3">Sipariş özeti</h6>
+
+                        @if (pkg is not null)
+                        {
+                            <div class="d-flex justify-content-between py-2 border-bottom border-dark">
+                                <span class="text-muted text-sm">Paket</span>
+                                <span class="badge badge-pill pkg-@pkg.Level px-2">@pkg.Name</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between py-2 border-bottom border-dark">
+                                <span class="text-muted text-sm">Aylık ücret</span>
+                                <span class="text-white text-sm">@pkg.MonthlyPrice.ToString("N2") ₺</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between py-2 border-bottom border-dark">
+                                <span class="text-muted text-sm">Süre</span>
+                                <span class="text-white text-sm" id="summaryDuration">1 ay</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between py-3">
+                                <span class="text-white">Toplam</span>
+                                <span class="h5 text-white mb-0" id="summaryTotal"
+                                      data-monthly="@pkg.MonthlyPrice.ToString(System.Globalization.CultureInfo.InvariantCulture)">
+                                    @pkg.MonthlyPrice.ToString("N2") ₺
+                                </span>
+                            </div>
+
+                            <div class="border-top border-dark pt-3">
+                                <div class="text-muted text-xs mb-2">Bu pakete geçince:</div>
+                                <div class="text-white text-sm">
+                                    @pkg.AccessibleSongCount şarkıya erişim
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Kart numarasini 4'erli gruplara ayir
+        document.getElementById('cardNumber')?.addEventListener('input', function (e) {
+            let v = e.target.value.replace(/\D/g, '').substring(0, 19);
+            e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+        });
+
+        // Sure degisince toplami guncelle
+        const durationSelect = document.getElementById('durationSelect');
+        const summaryTotal   = document.getElementById('summaryTotal');
+        const summaryDuration = document.getElementById('summaryDuration');
+
+        durationSelect?.addEventListener('change', function () {
+            const days    = parseInt(this.value, 10);
+            const monthly = parseFloat(summaryTotal.dataset.monthly);
+            const total   = (monthly * days / 30);
+
+            summaryTotal.textContent = total.toLocaleString('tr-TR', {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+            }) + ' ₺';
+
+            const months = Math.round(days / 30);
+            summaryDuration.textContent = months === 12 ? '12 ay' : months + ' ay';
+        });
+
+        // Cift gonderimi engelle
+        document.getElementById('checkoutForm')?.addEventListener('submit', function (e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'İşleniyor...';
+        });
+    </script>
+}

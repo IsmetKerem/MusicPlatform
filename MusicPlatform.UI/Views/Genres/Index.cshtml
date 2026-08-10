@@ -1,0 +1,75 @@
+@model List<MusicPlatform.Shared.DTOs.Genre.GenreListDto>
+@{ ViewData["Title"] = "Türler"; }
+
+<div class="page-container padding">
+
+    <div class="mb-4">
+        <h4 class="text-white mb-1">Türler</h4>
+        <div class="text-muted text-sm">Katalogdaki @Model.Count müzik türü</div>
+    </div>
+
+    <div class="row">
+        @foreach (var genre in Model)
+        {
+            <div class="col-6 col-md-4 col-lg-3 mb-4">
+                <a asp-action="Detail" asp-route-id="@genre.Id" class="genre-card d-block p-4 rounded"
+                   style="background: linear-gradient(135deg, @genre.ColorHex 0%, @(genre.ColorHex)33 100%)">
+
+                    <div class="genre-card-inner">
+                        <div class="text-white h4 mb-1">@genre.Name</div>
+                        <div class="text-white-50 text-sm mb-3">@genre.SongCount şarkı</div>
+
+                        @if (!string.IsNullOrEmpty(genre.Description))
+                        {
+                            <div class="text-white-50 text-xs genre-desc">@genre.Description</div>
+                        }
+                    </div>
+
+                    <div class="genre-note">
+                        <i data-feather="music" style="width:56px;height:56px"></i>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">Henüz tür tanımlanmamış.</div>
+    }
+
+</div>
+
+@section Styles {
+    <style>
+        .genre-card {
+            position: relative;
+            min-height: 190px;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .genre-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,.35);
+        }
+
+        .genre-card-inner { position: relative; z-index: 2; }
+
+        .genre-desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .genre-note {
+            position: absolute;
+            right: -14px; bottom: -14px;
+            color: rgba(255,255,255,.18);
+            transform: rotate(-18deg);
+            z-index: 1;
+        }
+    </style>
+}

@@ -1,0 +1,44 @@
+@model List<MusicPlatform.Shared.DTOs.Artist.AlbumBriefDto>
+@{
+    ViewData["Title"] = "Albümler";
+    var apiBase = ApiOptions.Value.BaseUrl;
+}
+
+<div class="page-container padding">
+
+    <div class="mb-4">
+        <h4 class="text-white mb-1">Albümler</h4>
+        <div class="text-muted text-sm">@Model.Count albüm</div>
+    </div>
+
+    <div class="row">
+        @foreach (var album in Model)
+        {
+            <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-4">
+                <a asp-action="Detail" asp-route-id="@album.Id" class="d-block">
+                    <div class="item-media item-media-4by3 mb-2">
+                        @if (!string.IsNullOrEmpty(album.CoverImageUrl))
+                        {
+                            <div class="item-media-content" style="background-image:url('@apiBase@album.CoverImageUrl')"></div>
+                        }
+                        else
+                        {
+                            <div class="item-media-content letter-cover letter-cover-lg"
+                                 style="@CoverHelper.GradientStyle(album.Title)">
+                                @CoverHelper.InitialsOf(album.Title)
+                            </div>
+                        }
+                    </div>
+                    <div class="text-white text-sm text-ellipsis">@album.Title</div>
+                    <div class="text-muted text-xs">@album.SongCount şarkı</div>
+                </a>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">Albüm bulunamadı.</div>
+    }
+
+</div>

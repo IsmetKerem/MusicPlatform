@@ -1,0 +1,154 @@
+@model MusicPlatform.UI.Models.PackagePageViewModel
+@inject CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "Paketler";
+}
+
+<div class="page-container padding">
+
+    <div class="text-center mb-5">
+        <h3 class="text-white mb-2">Paketini seç</h3>
+        <p class="text-muted">
+            Şu an <span class="badge badge-pill pkg-@CurrentUser.PackageLevel px-2">@CurrentUser.PackageName</span>
+            paketindesin.
+            @if (Model.Profile?.RemainingDays is int days)
+            {
+                <span class="ml-1">@days gün kaldı.</span>
+            }
+        </p>
+    </div>
+
+    @* ------------------------------------------------------ Paket kartlari *@
+    <div class="row justify-content-center mb-5">
+        @foreach (var pkg in Model.Packages)
+        {
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="package-card p-4 rounded h-100 d-flex flex-column @(pkg.IsCurrent ? "is-current" : "")">
+
+                    @if (pkg.IsCurrent)
+                    {
+                        <div class="package-ribbon">Mevcut paketin</div>
+                    }
+
+                    <div class="text-center mb-3">
+                        <span class="badge badge-pill pkg-@pkg.Level px-3 py-2 mb-3">@pkg.Name</span>
+
+                        <div class="text-white">
+                            @if (pkg.MonthlyPrice == 0)
+                            {
+                                <span class="h3">Ücretsiz</span>
+                            }
+                            else
+                            {
+                                <span class="h3">@pkg.MonthlyPrice.ToString("N2") ₺</span>
+                                <span class="text-muted text-sm">/ay</span>
+                            }
+                        </div>
+                    </div>
+
+                    <p class="text-muted text-sm text-center mb-3">@pkg.Description</p>
+
+                    <div class="text-center mb-3">
+                        <span class="h5 text-white">@pkg.AccessibleSongCount</span>
+                        <span class="text-muted text-sm">şarkıya erişim</span>
+                    </div>
+
+                    <ul class="list-unstyled text-sm flex mb-4">
+                        @foreach (var feature in pkg.Features)
+                        {
+                            <li class="d-flex align-items-start py-1">
+                                <i data-feather="check" class="text-primary mr-2 mt-1" style="width:14px;height:14px;flex-shrink:0"></i>
+                                <span class="text-muted">@feature</span>
+                            </li>
+                        }
+                    </ul>
+
+                    @if (pkg.IsCurrent)
+                    {
+                        <button class="btn btn-block btn-rounded" disabled>Kullanımda</button>
+                    }
+                    else if (pkg.CanUpgradeTo)
+                    {
+                        <a asp-action="Checkout" asp-route-level="@pkg.Level"
+                           class="btn btn-block btn-primary btn-rounded">Bu pakete geç</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-block btn-rounded btn-outline-secondary" disabled>
+                            Alt paket
+                        </button>
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+
+    @* ------------------------------------------------------------ Gecmis *@
+    @if (Model.History.Any())
+    {
+        <div class="p-4 rounded bg-dark-overlay">
+            <h6 class="text-white mb-3">Satın alma geçmişi</h6>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                    <thead>
+                        <tr class="text-muted text-xs">
+                            <th>İşlem No</th>
+                            <th>Paket</th>
+                            <th>Tutar</th>
+                            <th>Başlangıç</th>
+                            <th>Bitiş</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var h in Model.History)
+                        {
+                            <tr class="text-sm">
+                                <td class="text-muted"><code class="text-xs">@h.TransactionReference</code></td>
+                                <td><span class="text-white">@h.PackageName</span></td>
+                                <td class="text-white">@h.AmountPaid.ToString("N2") ₺</td>
+                                <td class="text-muted">@h.StartsAt.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                                <td class="text-muted">@h.ExpiresAt.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+</div>
+
+@section Styles {
+    <style>
+        .package-card {
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.07);
+            position: relative;
+            transition: transform .25s, border-color .25s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108,77,246,.5);
+        }
+
+        .package-card.is-current {
+            border-color: #6c4df6;
+            background: rgba(108,77,246,.08);
+        }
+
+        .package-ribbon {
+            position: absolute;
+            top: -10px; left: 50%;
+            transform: translateX(-50%);
+            background: #6c4df6;
+            color: #fff;
+            font-size: 11px;
+            padding: 3px 12px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+    </style>
+}

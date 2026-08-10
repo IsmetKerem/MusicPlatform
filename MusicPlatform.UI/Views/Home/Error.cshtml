@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Hata";
+    var statusCode = ViewData["StatusCode"] as int? ?? 500;
+
+    var (title, message) = statusCode switch
+    {
+        404 => ("Aradığın sayfa bulunamadı", "Bağlantı eski olabilir veya sayfa kaldırılmış olabilir."),
+        403 => ("Bu sayfaya erişimin yok", "Paketin bu içeriği desteklemiyor olabilir."),
+        401 => ("Oturumun sona ermiş", "Devam etmek için tekrar giriş yap."),
+        _   => ("Bir şeyler ters gitti", "Sorun bizden kaynaklanıyor olabilir. Biraz sonra tekrar dene.")
+    };
+}
+
+<div class="page-container padding">
+    <div class="d-flex align-items-center justify-content-center" style="min-height:60vh">
+        <div class="text-center">
+            <div class="display-3 text-muted mb-3" style="opacity:.35">@statusCode</div>
+            <h4 class="text-white mb-2">@title</h4>
+            <p class="text-muted mb-4">@message</p>
+
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-rounded px-4">
+                Ana sayfaya dön
+            </a>
+
+            @if (statusCode == 401)
+            {
+                <a asp-controller="Auth" asp-action="Login" class="btn btn-outline-primary btn-rounded px-4 ml-2">
+                    Giriş yap
+                </a>
+            }
+        </div>
+    </div>
+</div>

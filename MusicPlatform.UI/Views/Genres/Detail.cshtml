@@ -1,0 +1,53 @@
+@model MusicPlatform.UI.Models.GenreDetailViewModel
+@inject CurrentUser CurrentUser
+@{
+    var genre = Model.Genre;
+    ViewData["Title"] = genre.Name;
+
+    var playable = Model.Songs.Count(s => s.CanPlay);
+}
+
+<div class="genre-hero p-5" style="background: linear-gradient(135deg, @genre.ColorHex 0%, rgba(20,18,31,.9) 100%)">
+    <div class="page-container">
+        <div class="text-white-50 text-sm mb-2">TÜR</div>
+        <h2 class="text-white mb-2">@genre.Name</h2>
+
+        @if (!string.IsNullOrEmpty(genre.Description))
+        {
+            <p class="text-white-50 mb-3" style="max-width:560px">@genre.Description</p>
+        }
+
+        <div class="text-white-50 text-sm">
+            @Model.Songs.Count şarkı
+            <span class="mx-2">·</span>
+            <span>@playable tanesi @CurrentUser.PackageName paketinizde açık</span>
+        </div>
+    </div>
+</div>
+
+<div class="page-container padding">
+
+    @if (Model.Songs.Any())
+    {
+        <div class="row" data-playlist="genre-songs">
+            @foreach (var song in Model.Songs)
+            {
+                <partial name="_SongCard" model="song" />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="h5 text-white mb-2">Bu türde şarkı yok</div>
+            <a asp-action="Index" class="btn btn-sm btn-outline-primary btn-rounded mt-3">Türlere dön</a>
+        </div>
+    }
+
+</div>
+
+@section Styles {
+    <style>
+        .genre-hero { position: relative; }
+    </style>
+}

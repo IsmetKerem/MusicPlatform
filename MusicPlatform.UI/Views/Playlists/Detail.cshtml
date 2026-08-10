@@ -1,0 +1,288 @@
+@model MusicPlatform.Shared.DTOs.Playlist.PlaylistDetailDto
+@inject CurrentUser CurrentUser
+@{
+    ViewData["Title"] = Model.Name;
+    var apiBase = ApiOptions.Value.BaseUrl;
+    var playable = Model.Songs.Count(s => s.CanPlay);
+}
+
+@* ------------------------------------------------------------- Hero *@
+<div class="playlist-hero p-5" style="@CoverHelper.GradientStyle(Model.Name)">
+    <div class="page-container">
+        <div class="d-flex flex-column flex-md-row align-items-md-end">
+
+            <div class="playlist-hero-cover mb-3 mb-md-0 mr-md-4">
+                <i data-feather="music" style="width:56px;height:56px"></i>
+            </div>
+
+            <div class="flex">
+                <div class="text-white-50 text-sm mb-1">
+                    PLAYLIST @if (Model.IsPublic) { <span>· HERKESE AÇIK</span> }
+                </div>
+
+                <h2 class="text-white mb-2">@Model.Name</h2>
+
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <p class="text-white-50 mb-2" style="max-width:560px">@Model.Description</p>
+                }
+
+                <div class="text-white-50 text-sm mb-3">
+                    @Model.SongCount şarkı
+                    @if (Model.TotalDurationSeconds > 0)
+                    {
+                        <span class="mx-2">·</span>
+                        <span>@FormatDuration(Model.TotalDurationSeconds)</span>
+                    }
+                    @if (Model.SongCount > 0 && playable < Model.SongCount)
+                    {
+                        <span class="mx-2">·</span>
+                        <span>@playable tanesi paketinde açık</span>
+                    }
+                </div>
+
+                <div class="d-flex align-items-center">
+                    @if (playable > 0)
+                    {
+                        <button class="btn btn-white btn-rounded px-4" id="playAllBtn">
+                            <i data-feather="play" style="width:16px;height:16px"></i>
+                            <span class="ml-2">Tümünü çal</span>
+                        </button>
+                    }
+
+                    <button class="btn btn-icon btn-rounded ml-2 text-white" data-toggle="modal"
+                            data-target="#editPlaylistModal" title="Düzenle">
+                        <i data-feather="edit-2" style="width:16px;height:16px"></i>
+                    </button>
+
+                    <button class="btn btn-icon btn-rounded ml-2 text-white" data-toggle="modal"
+                            data-target="#deletePlaylistModal" title="Sil">
+                        <i data-feather="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="page-container padding">
+
+    @if (Model.Songs.Any())
+    {
+        <div class="track-list" data-playlist="playlist-songs">
+            @{ var order = 1; }
+            @foreach (var song in Model.Songs)
+            {
+                var hasCover = !string.IsNullOrEmpty(song.CoverImageUrl);
+
+                <div class="track-row song-item d-flex align-items-center p-2 rounded @(song.CanPlay ? "" : "song-locked")"
+                     id="track-@song.Id"
+                     data-song-id="@song.Id"
+                     data-song-title="@song.Title"
+                     data-song-artist="@song.ArtistName"
+                     data-song-cover="@(hasCover ? apiBase + song.CoverImageUrl : "")"
+                     data-song-duration="@song.DurationInSeconds"
+                     data-can-play="@song.CanPlay.ToString().ToLower()"
+                     data-required-package="@song.RequiredPackageName">
+
+                    <div class="track-order text-muted text-sm">@order</div>
+
+                    <div class="track-cover pos-rlt mx-3">
+                        @if (hasCover)
+                        {
+                            <div class="track-cover-img" style="background-image:url('@apiBase@song.CoverImageUrl')"></div>
+                        }
+                        else
+                        {
+                            <div class="track-cover-img letter-cover letter-cover-sm"
+                                 style="@CoverHelper.GradientStyle(song.ArtistName)">
+                                @CoverHelper.InitialsOf(song.ArtistName)
+                            </div>
+                        }
+
+                        <button class="btn-play track-play" type="button">
+                            @if (song.CanPlay)
+                            {
+                                <i data-feather="play" style="width:14px;height:14px"></i>
+                            }
+                            else
+                            {
+                                <i data-feather="lock" style="width:12px;height:12px"></i>
+                            }
+                        </button>
+                    </div>
+
+                    <div class="flex min-w-0">
+                        <div class="text-white text-ellipsis">
+                            <a asp-controller="Songs" asp-action="Detail" asp-route-id="@song.Id"
+                               class="text-white">@song.Title</a>
+                        </div>
+                        <div class="text-muted text-xs text-ellipsis">
+                            <a asp-controller="Artists" asp-action="Detail" asp-route-id="@song.ArtistId"
+                               class="text-muted">@song.ArtistName</a>
+                        </div>
+                    </div>
+
+                    @if (song.RequiredPackage > 1)
+                    {
+                        <span class="badge badge-pill pkg-@song.RequiredPackage px-2 mr-3">
+                            @song.RequiredPackageName
+                        </span>
+                    }
+
+                    <div class="text-muted text-xs mr-3">@song.DurationDisplay</div>
+
+                    <button class="btn btn-sm btn-icon btn-favorite p-0 mr-2" data-song-id="@song.Id">
+                        <i data-feather="heart" style="width:14px;height:14px"></i>
+                    </button>
+
+                    <button class="btn btn-sm btn-icon p-0 text-muted btn-remove-song"
+                            data-song-id="@song.Id" title="Playlist'ten çıkar">
+                        <i data-feather="x" style="width:16px;height:16px"></i>
+                    </button>
+                </div>
+
+                order++;
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="h5 text-white mb-2">Bu playlist boş</div>
+            <div class="mb-3">Şarkı detay sayfasındaki + butonundan ekleyebilirsin.</div>
+            <a asp-controller="Songs" asp-action="Index" class="btn btn-sm btn-outline-primary btn-rounded">
+                Şarkılara göz at
+            </a>
+        </div>
+    }
+
+</div>
+
+@* ----------------------------------------------------- Duzenle modal *@
+<div class="modal fade" id="editPlaylistModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <div class="modal-header border-0">
+                    <h6 class="modal-title text-white">Playlist'i düzenle</h6>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Playlist adı</label>
+                        <input name="Name" value="@Model.Name" class="form-control" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <textarea name="Description" class="form-control" rows="2">@Model.Description</textarea>
+                    </div>
+
+                    <label class="ui-check m-0 text-sm text-muted d-flex align-items-center">
+                        <input type="checkbox" name="IsPublic" value="true" checked="@Model.IsPublic" />
+                        <i></i> Herkese açık olsun
+                    </label>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-sm text-muted" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary btn-rounded px-4">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* --------------------------------------------------------- Sil modal *@
+<div class="modal fade" id="deletePlaylistModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-dark">
+            <div class="modal-body text-center p-4">
+                <h6 class="text-white mb-2">Playlist silinsin mi?</h6>
+                <p class="text-muted text-sm mb-4">"@Model.Name" kalıcı olarak kaldırılacak.</p>
+
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger btn-rounded px-4">Sil</button>
+                    <button type="button" class="btn btn-sm text-muted ml-2" data-dismiss="modal">Vazgeç</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+@section Styles {
+    <style>
+        .playlist-hero {
+            background: linear-gradient(150deg, var(--lc-from, #6C4DF6) 0%, rgba(20,18,31,.95) 100%);
+        }
+
+        .playlist-hero-cover {
+            width: 160px; height: 160px;
+            border-radius: 10px;
+            background: rgba(0,0,0,.25);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,.6);
+            box-shadow: 0 10px 40px rgba(0,0,0,.4);
+            flex-shrink: 0;
+        }
+
+        .btn-remove-song { opacity: 0; transition: opacity .2s; }
+        .track-row:hover .btn-remove-song { opacity: 1; }
+        .btn-remove-song:hover { color: #dc3545 !important; }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        // Tumunu cal: ilk dinlenebilir sarkidan basla
+        document.getElementById('playAllBtn')?.addEventListener('click', function () {
+            const first = document.querySelector('[data-playlist] [data-can-play="true"] .btn-play, ' +
+                                                 '[data-playlist] [data-can-play="true"]');
+            if (!first) return;
+
+            const row = first.closest('[data-song-id]') || first;
+            row.querySelector('.btn-play')?.click();
+        });
+
+        // Playlist'ten sarki cikar
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-remove-song');
+            if (!btn) return;
+
+            e.preventDefault();
+            const songId = btn.dataset.songId;
+
+            fetch(`/Playlists/@Model.Id/RemoveSong/${songId}`, { method: 'POST' })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.success) {
+                        const row = document.getElementById('track-' + songId);
+                        row?.remove();
+                        MP.toast(res.message || 'Şarkı çıkarıldı.', 'success');
+                    } else {
+                        MP.toast(res.message || 'Çıkarılamadı.', 'danger');
+                    }
+                })
+                .catch(() => MP.toast('Sunucuya ulaşılamadı.', 'danger'));
+        });
+    </script>
+}
+
+@functions {
+    string FormatDuration(int seconds)
+    {
+        var t = TimeSpan.FromSeconds(seconds);
+        return t.TotalHours >= 1
+            ? $"{(int)t.TotalHours} sa {t.Minutes} dk"
+            : $"{t.Minutes} dk";
+    }
+}

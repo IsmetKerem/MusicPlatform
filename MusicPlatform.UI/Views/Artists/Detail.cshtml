@@ -1,0 +1,296 @@
+@model MusicPlatform.Shared.DTOs.Artist.ArtistDetailDto
+@{
+    ViewData["Title"] = Model.Name;
+    var apiBase = ApiOptions.Value.BaseUrl;
+
+    // Sanatci gorseli yoksa en populer sarkinin kapagini kullan
+    var heroCover = Model.Songs
+        .Where(s => !string.IsNullOrEmpty(s.CoverImageUrl))
+        .OrderByDescending(s => s.PlayCount)
+        .Select(s => s.CoverImageUrl)
+        .FirstOrDefault();
+}
+
+@* ------------------------------------------------------------- Hero *@
+<div class="artist-hero">
+    @if (heroCover is not null)
+    {
+        <div class="artist-hero-bg" style="background-image:url('@apiBase@heroCover')"></div>
+    }
+    <div class="artist-hero-shade"></div>
+
+    <div class="page-container pos-rlt">
+        <div class="d-flex flex-column flex-md-row align-items-md-end py-5">
+
+            <div class="artist-hero-avatar mb-3 mb-md-0 mr-md-4">
+                @if (heroCover is not null)
+                {
+                    <div class="artist-hero-avatar-img" style="background-image:url('@apiBase@heroCover')"></div>
+                }
+                else
+                {
+                    <div class="artist-hero-avatar-img letter-cover"
+                         style="@CoverHelper.GradientStyle(Model.Name);font-size:3rem">
+                        @CoverHelper.InitialsOf(Model.Name)
+                    </div>
+                }
+            </div>
+
+            <div class="flex">
+                <div class="text-muted text-sm mb-1">SANATÇI</div>
+                <h2 class="text-white mb-2">@Model.Name</h2>
+
+                <div class="mb-2">
+                    @foreach (var genre in Model.TopGenres)
+                    {
+                        <span class="badge badge-pill badge-dark px-2 mr-1">@genre</span>
+                    }
+                </div>
+
+                <div class="text-muted text-sm">
+                    @Model.SongCount şarkı
+                    @if (Model.Albums.Any())
+                    {
+                        <span class="mx-2">·</span><span>@Model.Albums.Count albüm</span>
+                    }
+                    @if (Model.TotalPlayCount > 0)
+                    {
+                        <span class="mx-2">·</span><span>@Model.TotalPlayCount.ToString("N0") dinlenme</span>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Country))
+                    {
+                        <span class="mx-2">·</span><span>@Model.Country</span>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="page-container padding">
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            @* ------------------------------------------ Sarkilar (case maddesi) *@
+            <div class="d-flex align-items-center mb-3">
+                <h5 class="text-white m-0">Şarkılar</h5>
+                <span class="text-muted text-sm ml-3">en çok dinlenenden başlayarak</span>
+            </div>
+
+            @if (Model.Songs.Any())
+            {
+                <div class="track-list mb-5" data-playlist="artist-songs">
+                    @{ var order = 1; }
+                    @foreach (var song in Model.Songs)
+                    {
+                        var hasCover = !string.IsNullOrEmpty(song.CoverImageUrl);
+
+                        <div class="track-row song-item d-flex align-items-center p-2 rounded @(song.CanPlay ? "" : "song-locked")"
+                             data-song-id="@song.Id"
+                             data-song-title="@song.Title"
+                             data-song-artist="@song.ArtistName"
+                             data-song-cover="@(hasCover ? apiBase + song.CoverImageUrl : "")"
+                             data-song-duration="@song.DurationInSeconds"
+                             data-can-play="@song.CanPlay.ToString().ToLower()"
+                             data-required-package="@song.RequiredPackageName">
+
+                            <div class="track-order text-muted text-sm">@order</div>
+
+                            <div class="track-cover pos-rlt mx-3">
+                                @if (hasCover)
+                                {
+                                    <div class="track-cover-img" style="background-image:url('@apiBase@song.CoverImageUrl')"></div>
+                                }
+                                else
+                                {
+                                    <div class="track-cover-img letter-cover letter-cover-sm"
+                                         style="@CoverHelper.GradientStyle(song.ArtistName)">
+                                        @CoverHelper.InitialsOf(song.ArtistName)
+                                    </div>
+                                }
+
+                                <button class="btn-play track-play" type="button">
+                                    @if (song.CanPlay)
+                                    {
+                                        <i data-feather="play" style="width:14px;height:14px"></i>
+                                    }
+                                    else
+                                    {
+                                        <i data-feather="lock" style="width:12px;height:12px"></i>
+                                    }
+                                </button>
+                            </div>
+
+                            <div class="flex min-w-0">
+                                <div class="text-white text-ellipsis">
+                                    <a asp-controller="Songs" asp-action="Detail" asp-route-id="@song.Id"
+                                       class="text-white">@song.Title</a>
+                                </div>
+                                <div class="text-muted text-xs text-ellipsis">
+                                    @if (!string.IsNullOrEmpty(song.AlbumTitle))
+                                    {
+                                        <span>@song.AlbumTitle</span><span class="mx-1">·</span>
+                                    }
+                                    <span>@string.Join(", ", song.Genres)</span>
+                                </div>
+                            </div>
+
+                            @if (song.RequiredPackage > 1)
+                            {
+                                <span class="badge badge-pill pkg-@song.RequiredPackage px-2 mr-3">
+                                    @song.RequiredPackageName
+                                </span>
+                            }
+
+                            <div class="text-muted text-xs d-none d-sm-block mr-3">
+                                @song.PlayCount.ToString("N0")
+                            </div>
+
+                            <div class="text-muted text-xs mr-2">@song.DurationDisplay</div>
+
+                            <button class="btn btn-sm btn-icon btn-favorite p-0" data-song-id="@song.Id">
+                                <i data-feather="heart" style="width:14px;height:14px"></i>
+                            </button>
+                        </div>
+
+                        order++;
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">Bu sanatçının şarkısı bulunamadı.</div>
+            }
+
+        </div>
+
+        @* ------------------------------------------------------ Sag panel *@
+        <div class="col-lg-4">
+            <div class="pl-lg-3">
+
+                @if (!string.IsNullOrEmpty(Model.Bio))
+                {
+                    <h6 class="text-white mb-3">Hakkında</h6>
+                    <p class="text-muted text-sm mb-4">@Model.Bio</p>
+                }
+
+                @if (Model.DebutYear.HasValue)
+                {
+                    <div class="d-flex justify-content-between py-2 border-bottom border-dark">
+                        <span class="text-muted text-sm">Sahne yılı</span>
+                        <span class="text-white text-sm">@Model.DebutYear</span>
+                    </div>
+                }
+
+                @if (Model.Albums.Any())
+                {
+                    <h6 class="text-white mb-3 mt-4">Albümler</h6>
+
+                    @foreach (var album in Model.Albums)
+                    {
+                        <a asp-controller="Albums" asp-action="Detail" asp-route-id="@album.Id"
+                           class="d-flex align-items-center p-2 rounded mb-1 album-row">
+
+                            <div class="album-cover">
+                                @if (!string.IsNullOrEmpty(album.CoverImageUrl))
+                                {
+                                    <div class="album-cover-img" style="background-image:url('@apiBase@album.CoverImageUrl')"></div>
+                                }
+                                else
+                                {
+                                    <div class="album-cover-img letter-cover letter-cover-sm"
+                                         style="@CoverHelper.GradientStyle(album.Title)">
+                                        @CoverHelper.InitialsOf(album.Title)
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="flex ml-3 min-w-0">
+                                <div class="text-white text-sm text-ellipsis">@album.Title</div>
+                                <div class="text-muted text-xs">
+                                    @album.SongCount şarkı
+                                    @if (album.ReleaseDate.HasValue)
+                                    {
+                                        <span class="mx-1">·</span><span>@album.ReleaseDate.Value.Year</span>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    }
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .artist-hero { position: relative; overflow: hidden; }
+
+        .artist-hero-bg {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            filter: blur(28px) brightness(.45);
+            transform: scale(1.15);
+        }
+
+        .artist-hero-shade {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(20,18,31,.45) 0%, rgba(20,18,31,.95) 100%);
+        }
+
+        .artist-hero-avatar { width: 160px; height: 160px; flex-shrink: 0; }
+
+        .artist-hero-avatar-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background-size: cover; background-position: center;
+            background-color: #241f38;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,.5);
+        }
+
+        .track-row { transition: background .2s; }
+        .track-row:hover { background: rgba(255,255,255,.04); }
+        .track-row.playing { background: rgba(108,77,246,.12); }
+
+        .track-order { width: 24px; text-align: center; flex-shrink: 0; }
+
+        .track-cover { width: 44px; height: 44px; flex-shrink: 0; }
+        .track-cover-img {
+            width: 100%; height: 100%;
+            border-radius: 5px;
+            background-size: cover; background-position: center;
+            background-color: #241f38;
+        }
+
+        .track-play {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            border: 0; border-radius: 5px;
+            background: rgba(20,18,31,.6);
+            color: #fff;
+            opacity: 0; transition: opacity .2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .track-row:hover .track-play { opacity: 1; }
+
+        .album-row { transition: background .2s; }
+        .album-row:hover { background: rgba(255,255,255,.04); }
+
+        .album-cover { width: 44px; height: 44px; flex-shrink: 0; }
+        .album-cover-img {
+            width: 100%; height: 100%;
+            border-radius: 5px;
+            background-size: cover; background-position: center;
+            background-color: #241f38;
+        }
+
+        .min-w-0 { min-width: 0; }
+    </style>
+}

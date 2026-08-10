@@ -1,0 +1,75 @@
+@model MusicPlatform.Shared.DTOs.Package.PurchaseResultDto
+@inject CurrentUser CurrentUser
+@{ ViewData["Title"] = "Ödeme Başarılı"; }
+
+<div class="page-container padding">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="p-5 rounded bg-dark-overlay text-center">
+
+                <div class="mb-4">
+                    <span class="success-check">
+                        <i data-feather="check" style="width:32px;height:32px"></i>
+                    </span>
+                </div>
+
+                <h4 class="text-white mb-2">Ödemen alındı</h4>
+                <p class="text-muted mb-4">
+                    <strong class="text-white">@Model.PackageName</strong> paketin aktifleşti.
+                    Yeni katalogun açıldı, iyi dinlemeler.
+                </p>
+
+                <div class="text-left p-3 rounded mb-4" style="background: rgba(0,0,0,.25)">
+                    <div class="d-flex justify-content-between py-1">
+                        <span class="text-muted text-sm">İşlem No</span>
+                        <code class="text-white text-sm">@Model.TransactionReference</code>
+                    </div>
+                    <div class="d-flex justify-content-between py-1">
+                        <span class="text-muted text-sm">Tutar</span>
+                        <span class="text-white text-sm">@Model.AmountPaid.ToString("N2") ₺</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-1">
+                        <span class="text-muted text-sm">Geçerlilik</span>
+                        <span class="text-white text-sm">@Model.ExpiresAt.ToLocalTime().ToString("dd MMMM yyyy")</span>
+                    </div>
+                </div>
+
+                <div class="alert bg-dark border-0 text-left text-sm mb-4">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="refresh-cw" class="text-primary mr-3" style="width:18px;height:18px;flex-shrink:0"></i>
+                        <div class="text-muted">
+                            Oturum anahtarın yenilendi. Artık
+                            <span class="badge badge-pill pkg-@CurrentUser.PackageLevel px-2">@CurrentUser.PackageName</span>
+                            paketiyle dinliyorsun.
+                        </div>
+                    </div>
+                </div>
+
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-rounded px-5">
+                    Dinlemeye Başla
+                </a>
+
+                <div class="mt-3">
+                    <span class="text-muted text-xs">Makbuz e-posta adresine gönderildi.</span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .success-check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: rgba(40,167,69,.15);
+            color: #28a745;
+        }
+    </style>
+}

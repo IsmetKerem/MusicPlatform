@@ -3,20 +3,27 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MusicPlatform.API.Middleware;
 using MusicPlatform.Business.Extensions;
 using MusicPlatform.Business.Options;
 using MusicPlatform.Business.Services.Abstract;
 using MusicPlatform.DAL.Context;
 using MusicPlatform.DAL.Seed;
 using MusicPlatform.Entity.Concrete;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------------------------------------------------- Mutlak yol ayarları
-// Business katmanı IHostEnvironment görmediği için yolları burada çözüyoruz.
+// ------------------------------------------------------------------ Serilog
+builder.Host.UseSerilog((context, services, config) =>
+    config.ReadFrom.Configuration(context.Configuration)
+          .ReadFrom.Services(services));
+
+
 builder.Configuration["MusicSettings:ResolvedMusicPath"] = Path.Combine(
     builder.Environment.ContentRootPath,
     builder.Configuration["MusicSettings:MusicFolder"] ?? "App_Data/Music");
@@ -24,11 +31,9 @@ builder.Configuration["MusicSettings:ResolvedMusicPath"] = Path.Combine(
 builder.Configuration["MusicSettings:ResolvedAvatarPath"] = Path.Combine(
     builder.Environment.ContentRootPath, "wwwroot/avatars");
 
-// ------------------------------------------------------------------ Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ------------------------------------------------------------------ Identity
 builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
 {
     options.Password.RequireDigit = true;
@@ -45,11 +50,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
 
-// Şifre sıfırlama / e-posta doğrulama token'larının ömrü
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
     options.TokenLifespan = TimeSpan.FromHours(1));
 
-// ----------------------------------------------------------------- JWT setup
 var jwt = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
 
 builder.Services.AddAuthentication(options =>
@@ -82,7 +85,34 @@ builder.Services.AddBusinessServices(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// ------------------------------------------------------------------ Hangfire
+// -------------------------------------------------------------- Rate limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddFixedWindowLimiter("auth", limiter =>
+    {
+        limiter.PermitLimit = 10;
+        limiter.Window = TimeSpan.FromMinutes(1);
+        limiter.QueueLimit = 0;
+    });
+
+    options.AddFixedWindowLimiter("general", limiter =>
+    {
+        limiter.PermitLimit = 120;
+        limiter.Window = TimeSpan.FromMinutes(1);
+        limiter.QueueLimit = 0;
+    });
+
+    options.OnRejected = async (context, ct) =>
+    {
+        context.HttpContext.Response.ContentType = "application/json";
+        await context.HttpContext.Response.WriteAsync(
+            """{"success":false,"message":"Çok fazla istek gönderdiniz. Lütfen biraz bekleyin.","errors":[]}""",
+            ct);
+    };
+});
+
 builder.Services.AddHangfire(config => config
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
@@ -100,7 +130,6 @@ builder.Services.AddHangfire(config => config
 
 builder.Services.AddHangfireServer();
 
-// ------------------------------------------------------- Swagger + JWT butonu
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "MusicPlatform API", Version = "v1" });
@@ -133,7 +162,6 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// ---------------------------------------------------------------- Seed verisi
 using (var scope = app.Services.CreateScope())
 {
     var sp = scope.ServiceProvider;
@@ -148,11 +176,19 @@ using (var scope = app.Services.CreateScope())
 
     await DbSeeder.SeedAsync(context, userManager, musicFolder, coverFolder);
 
-    // Öneri motorunun anlamlı sonuç üretebilmesi için sahte kullanıcı ve
-    // dinleme geçmişi. Sadece geliştirme ortamında çalışır.
+
     if (app.Environment.IsDevelopment())
         await DemoDataGenerator.GenerateAsync(context, userManager);
 }
+
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate =
+        "{RequestMethod} {RequestPath} → {StatusCode} ({Elapsed:0} ms)";
+});
 
 if (app.Environment.IsDevelopment())
 {
@@ -163,10 +199,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseRouting();
+
+app.UseRateLimiter();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-// --------------------------------------------------------- Hangfire dashboard
 app.UseHangfireDashboard("/hangfire");
 
 RecurringJob.AddOrUpdate<INotificationService>(

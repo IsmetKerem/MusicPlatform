@@ -23,7 +23,6 @@ public static class DbSeeder
         await SeedListeningHistoryAsync(context, userManager);
     }
 
-    // ---------------------------------------------------------------- GENRES
     private static async Task SeedGenresAsync(AppDbContext context)
     {
         if (await context.Genres.AnyAsync()) return;
@@ -42,9 +41,7 @@ public static class DbSeeder
         await context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Sanatçı adına göre tür ataması. Listede olmayan sanatçılar "Pop" sayılır.
-    /// </summary>
+
     private static readonly Dictionary<string, string[]> ArtistGenreMap = new(StringComparer.OrdinalIgnoreCase)
     {
         // --- Rap ---
