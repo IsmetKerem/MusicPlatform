@@ -2,35 +2,63 @@
 @inject CurrentUser CurrentUser
 @{
     ViewData["Title"] = "Keşfet";
-    var playableCount = Model.Popular.Count(s => s.CanPlay);
+
+    var hour = DateTime.Now.Hour;
+    var greet = hour < 6 ? "İyi geceler" : hour < 12 ? "Günaydın" : hour < 18 ? "İyi günler" : "İyi akşamlar";
+    var firstName = CurrentUser.FullName.Split(' ')[0];
+    var tierNames = new[] { "Basic", "Gold", "Premium", "Elit" };
 }
 
 <div class="page-container padding">
 
-    @* --------------------------------------------------- Karsilama *@
-    <div class="d-flex align-items-end mb-5">
+    @* ═══════════════════════════════ Karşılama + katalog kilidi *@
+    <div class="unlock-panel">
+
         <div>
-            <h2 class="text-white mb-1">Merhaba, @CurrentUser.FullName.Split(' ')[0]</h2>
-            <div class="text-muted">
-                <span class="badge badge-pill pkg-@CurrentUser.PackageLevel px-2">@CurrentUser.PackageName</span>
-                paketiyle dinliyorsun
+            <div class="unlock-eyebrow">@greet</div>
+            <h1 class="unlock-greet">@firstName</h1>
+        </div>
+
+        <div class="unlock-meter">
+            <div class="unlock-count">
+                <b>@Model.UnlockedSongs</b>
+                <span>/ @Model.TotalSongs şarkı @CurrentUser.PackageName paketinde açık</span>
+            </div>
+
+            <div class="unlock-track">
+                @for (var lvl = 1; lvl <= 4; lvl++)
+                {
+                    <div class="unlock-seg @(CurrentUser.PackageLevel >= lvl ? "on" : "")"
+                         title="@tierNames[lvl - 1] · @Model.TierCounts.GetValueOrDefault(lvl) şarkı"
+                         style="--seg-color:var(--tier-@lvl);--seg-delay:@(lvl * 0.08)s"></div>
+                }
+            </div>
+
+            <div class="unlock-legend">
+                @for (var lvl = 1; lvl <= 4; lvl++)
+                {
+                    <span class="@(CurrentUser.PackageLevel >= lvl ? "on" : "")">@tierNames[lvl - 1]</span>
+                }
             </div>
         </div>
-        <span class="flex"></span>
+
         @if (CurrentUser.PackageLevel < 4)
         {
-            <a asp-controller="Packages" asp-action="Index" class="btn btn-sm btn-rounded btn-outline-primary">
-                Paketini yükselt
-            </a>
+            <div>
+                <a asp-controller="Packages" asp-action="Index"
+                   class="btn btn-outline-primary btn-rounded px-4">Paketini yükselt</a>
+            </div>
         }
+
     </div>
 
-    @* ------------------------------------------------ Sana ozel *@
+    @* ═══════════════════════════════════════════════ Sana özel *@
     @if (Model.Recommendations.Any())
     {
-        <div class="d-flex align-items-center mb-3">
-            <h5 class="text-white m-0">Sana özel</h5>
-            <span class="text-muted text-sm ml-3">dinleme geçmişine göre</span>
+        <div class="section-head">
+            <h5>Sana özel</h5>
+            <span class="note">dinleme geçmişine göre</span>
+            <span class="rule"></span>
         </div>
 
         <div class="row" data-playlist="recommendations">
@@ -40,18 +68,16 @@
             }
         </div>
 
-        <div class="my-5"></div>
+        <div class="section-gap"></div>
     }
 
-    @* ------------------------------------------------ Populer *@
+    @* ══════════════════════════════════════════════════ Popüler *@
     @if (Model.Popular.Any())
     {
-        <div class="d-flex align-items-center mb-3">
-            <h5 class="text-white m-0">En çok dinlenenler</h5>
-            <span class="flex"></span>
-            <a asp-controller="Songs" asp-action="Index" asp-route-sortBy="2" class="text-sm text-muted">
-                Tümünü gör
-            </a>
+        <div class="section-head">
+            <h5>En çok dinlenenler</h5>
+            <span class="rule"></span>
+            <a asp-controller="Songs" asp-action="Index" asp-route-sortBy="2" class="more">Tümünü gör →</a>
         </div>
 
         <div class="row" data-playlist="popular">
@@ -61,33 +87,41 @@
             }
         </div>
 
-        <div class="my-5"></div>
+        <div class="section-gap"></div>
     }
 
-    @* ------------------------------------------------ Turler *@
+    @* ════════════════════════════════════════════════════ Türler *@
     @if (Model.Genres.Any())
     {
-        <h5 class="text-white mb-3">Türler</h5>
+        <div class="section-head">
+            <h5>Türler</h5>
+            <span class="rule"></span>
+            <a asp-controller="Genres" asp-action="Index" class="more">Tümünü gör →</a>
+        </div>
 
-        <div class="row mb-5">
+        <div class="row">
             @foreach (var genre in Model.Genres)
             {
                 <div class="col-6 col-md-4 col-lg-3 mb-3">
                     <a asp-controller="Genres" asp-action="Detail" asp-route-id="@genre.Id"
-                       class="d-block p-4 rounded pos-rlt overflow-hidden"
-                       style="background: linear-gradient(135deg, @genre.ColorHex, @(genre.ColorHex)44); min-height:110px">
-                        <div class="text-white h5 mb-1">@genre.Name</div>
-                        <div class="text-white-50 text-sm">@genre.SongCount şarkı</div>
+                       class="genre-tile" style="--g-color:@genre.ColorHex">
+                        <div class="genre-tile-name">@genre.Name</div>
+                        <div class="genre-tile-count">@genre.SongCount şarkı</div>
                     </a>
                 </div>
             }
         </div>
+
+        <div class="section-gap"></div>
     }
 
-    @* ------------------------------------------------ Yeni eklenenler *@
+    @* ══════════════════════════════════════════ Yeni eklenenler *@
     @if (Model.Newest.Any())
     {
-        <h5 class="text-white mb-3">Yeni eklenenler</h5>
+        <div class="section-head">
+            <h5>Yeni eklenenler</h5>
+            <span class="rule"></span>
+        </div>
 
         <div class="row" data-playlist="newest">
             @foreach (var song in Model.Newest)
@@ -100,7 +134,7 @@
     @if (!Model.Popular.Any() && !Model.Newest.Any())
     {
         <div class="empty-state">
-            <div class="h5 text-white mb-2">Henüz şarkı yok</div>
+            <div class="h5 mb-2">Katalog boş</div>
             <div>API tarafında seed verisinin yüklendiğinden emin ol.</div>
         </div>
     }

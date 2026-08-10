@@ -28,14 +28,24 @@ public class HomeController : Controller
         var newestTask  = _api.GetAsync<PagedResult<SongListDto>>("/api/songs?sortBy=3&pageSize=12");
 
         await Task.WhenAll(popularTask, recTask, genreTask, newestTask);
+        var allSongsTask = _api.GetAsync<PagedResult<SongListDto>>("/api/songs?pageSize=200");
+        await allSongsTask;
+
+        var all = allSongsTask.Result.Data?.Items ?? new();
 
         var model = new HomeViewModel
         {
             Popular         = popularTask.Result.Data ?? new(),
             Recommendations = recTask.Result.Data ?? new(),
             Genres          = genreTask.Result.Data ?? new(),
-            Newest          = newestTask.Result.Data?.Items ?? new()
+            Newest          = newestTask.Result.Data?.Items ?? new(),
+            TotalSongs      = all.Count,
+            UnlockedSongs   = all.Count(s => s.CanPlay),
+            TierCounts      = all.GroupBy(s => s.RequiredPackage)
+                .ToDictionary(g => g.Key, g => g.Count())
         };
+
+        
 
         return View(model);
     }

@@ -5,6 +5,7 @@
 }
 
 <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-4 song-item @(Model.CanPlay ? "" : "song-locked")"
+     style="--lock-tier:var(--tier-@Model.RequiredPackage)"
      data-song-id="@Model.Id"
      data-song-title="@Model.Title"
      data-song-artist="@Model.ArtistName"
@@ -13,14 +14,14 @@
      data-can-play="@Model.CanPlay.ToString().ToLower()"
      data-required-package="@Model.RequiredPackageName">
 
-    <div class="item r pos-rlt">
-
-        @if (Model.RequiredPackage > 1)
-        {
-            <span class="package-lock-badge pkg-@Model.RequiredPackage">@Model.RequiredPackageName</span>
-        }
+    <div class="item pos-rlt">
 
         <div class="item-media item-media-4by3">
+            @if (Model.RequiredPackage > 1)
+            {
+                <span class="package-lock-badge tier-@Model.RequiredPackage">@Model.RequiredPackageName</span>
+            }
+
             @if (hasCover)
             {
                 <div class="item-media-content"
@@ -34,36 +35,33 @@
                 </div>
             }
 
-            <div class="item-overlay center">
-                <button class="btn-play btn btn-icon btn-rounded btn-white"
+            <div class="item-overlay">
+                <button class="btn-play"
                         type="button"
                         title="@(Model.CanPlay ? "Çal" : Model.RequiredPackageName + " paketi gerekli")">
                     @if (Model.CanPlay)
                     {
-                        <i data-feather="play" style="width:18px;height:18px"></i>
+                        <i data-feather="play" style="width:17px;height:17px"></i>
                     }
                     else
                     {
-                        <i data-feather="lock" style="width:16px;height:16px"></i>
+                        <i data-feather="lock" style="width:15px;height:15px"></i>
                     }
                 </button>
             </div>
         </div>
 
-        <div class="item-info pt-2">
+        <div class="item-info">
             <div class="item-title text-ellipsis">
-                <a asp-controller="Songs" asp-action="Detail" asp-route-id="@Model.Id"
-                   class="text-white">@Model.Title</a>
+                <a asp-controller="Songs" asp-action="Detail" asp-route-id="@Model.Id">@Model.Title</a>
             </div>
-            <div class="item-author text-sm text-muted text-ellipsis">
-                <a asp-controller="Artists" asp-action="Detail" asp-route-id="@Model.ArtistId"
-                   class="text-muted">@Model.ArtistName</a>
+            <div class="item-author text-ellipsis">
+                <a asp-controller="Artists" asp-action="Detail" asp-route-id="@Model.ArtistId">@Model.ArtistName</a>
             </div>
-            <div class="d-flex align-items-center mt-1">
-                <span class="text-xs text-muted">@Model.DurationDisplay</span>
+            <div class="d-flex align-items-center mt-2">
+                <span class="text-xs" style="color:var(--ink-low)">@Model.DurationDisplay</span>
                 <span class="flex"></span>
-                <button class="btn btn-sm btn-icon btn-favorite p-0"
-                        data-song-id="@Model.Id" title="Favorilere ekle">
+                <button class="btn-favorite" data-song-id="@Model.Id" title="Favorilere ekle">
                     <i data-feather="heart" style="width:14px;height:14px"></i>
                 </button>
             </div>

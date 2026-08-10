@@ -9,4 +9,7 @@ public class HomeViewModel
     public List<RecommendedSongDto> Recommendations { get; set; } = new();
     public List<GenreListDto> Genres { get; set; } = new();
     public List<SongListDto> Newest { get; set; } = new();
+    public int TotalSongs { get; set; }
+    public int UnlockedSongs { get; set; }
+    public Dictionary<int, int> TierCounts { get; set; } = new();
 }

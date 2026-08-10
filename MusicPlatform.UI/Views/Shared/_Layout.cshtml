@@ -59,35 +59,33 @@
             </ul>
         </div>
 
-        <ul class="nav navbar-menu order-1 order-lg-2">
+        <ul class="nav navbar-menu order-1 order-lg-2 align-items-center">
 
             @if (TokenStore.IsAuthenticated)
             {
-                <li class="nav-item d-none d-sm-block">
+                <li class="nav-item d-none d-md-block mr-2">
                     <form asp-controller="Songs" asp-action="Index" method="get" class="m-0">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control form-control-sm bg-dark-overlay border-0"
-                                   placeholder="Şarkı veya sanatçı ara..." style="min-width:200px" />
-                        </div>
+                        <input type="text" name="search"
+                               class="form-control"
+                               placeholder="Şarkı veya sanatçı ara"
+                               style="width:220px" />
                     </form>
                 </li>
 
-                <li class="nav-item">
-                    <span class="badge badge-pill badge-@PackageBadge(CurrentUser.PackageLevel) mx-2">
-                        @CurrentUser.PackageName
-                    </span>
+                <li class="nav-item mr-2">
+                    <span class="tier tier-@CurrentUser.PackageLevel">@CurrentUser.PackageName</span>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link d-flex align-items-center px-2" data-toggle="dropdown">
-                        <span class="avatar w-24 bg-primary text-white">
+                    <a href="#" class="nav-link d-flex align-items-center px-1" data-toggle="dropdown">
+                        <span class="avatar nav-avatar">
                             @(CurrentUser.FullName.Length > 0 ? CurrentUser.FullName[0].ToString().ToUpper() : "K")
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right mt-3">
-                        <div class="dropdown-header px-3 py-2">
-                            <div class="text-white">@CurrentUser.FullName</div>
-                            <small class="text-muted">@CurrentUser.Email</small>
+                    <div class="dropdown-menu dropdown-menu-right mt-2">
+                        <div class="px-3 py-2">
+                            <div class="text-white" style="font-size:14px;font-weight:600">@CurrentUser.FullName</div>
+                            <div class="text-xs" style="color:var(--ink-low)">@CurrentUser.Email</div>
                         </div>
                         <div class="dropdown-divider"></div>
                         <a asp-controller="Profile" asp-action="Index" class="dropdown-item">Profilim</a>
@@ -97,7 +95,7 @@
                         <div class="dropdown-divider"></div>
                         <form asp-controller="Auth" asp-action="Logout" method="post" class="m-0">
                             @Html.AntiForgeryToken()
-                            <button type="submit" class="dropdown-item text-danger">Çıkış Yap</button>
+                            <button type="submit" class="dropdown-item" style="color:#FF4D6A">Çıkış yap</button>
                         </form>
                     </div>
                 </li>
@@ -107,12 +105,12 @@
                 <li class="nav-item">
                     <a asp-controller="Auth" asp-action="Login" class="nav-link">Giriş</a>
                 </li>
-                <li class="d-flex align-items-center">
-                    <a asp-controller="Auth" asp-action="Register" class="btn btn-rounded btn-sm btn-primary">Kayıt Ol</a>
+                <li class="d-flex align-items-center ml-2">
+                    <a asp-controller="Auth" asp-action="Register" class="btn btn-sm btn-primary btn-rounded px-3">Kayıt ol</a>
                 </li>
             }
 
-            <li class="nav-item d-lg-none">
+            <li class="nav-item d-lg-none ml-1">
                 <a href="#" class="nav-link px-2" data-toggle="collapse" data-target="#navbarCollapse">
                     <i data-feather="menu"></i>
                 </a>
