@@ -2,64 +2,122 @@
 <html lang="tr" dir="ltr">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>@ViewData["Title"] - MusicPlatform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · MusicPlatform</title>
 
     <link rel="stylesheet" href="~/Bepop/assets/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/Bepop/assets/css/theme.css" />
-    <link rel="stylesheet" href="~/Bepop/assets/css/style.css" />
     <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
 </head>
-<body class="layout-row bg-dark">
+<body>
 
-<div class="d-flex flex-column flex">
-    <div class="row no-gutters h-100">
+<div class="auth-shell">
 
-        @{
-            var heroIndex = Random.Shared.Next(1, 4);
-        }
-        <div class="col-md-6 d-none d-md-block bg-dark"
-             style="background-image:url('/img/auth-@(heroIndex).jpg');background-size:cover;background-position:center">
-            <div class="p-3 p-md-5 d-flex flex-column h-100">
-                <h4 class="mb-3 text-white">MusicPlatform</h4>
-                <div class="text-fade">JWT tabanlı müzik dinleme sistemi</div>
+    @* ═══════════════════════════════════ SOL: sahne *@
+    <aside class="auth-stage">
+        <div class="auth-orb auth-orb-1"></div>
+        <div class="auth-orb auth-orb-2"></div>
+        <div class="auth-orb auth-orb-3"></div>
 
-                <div class="d-flex flex align-items-center justify-content-center">
-                    <div class="text-center">
-                        <div class="text-white h2 mb-3">Dört paket, tek platform</div>
-                        <div class="text-fade">Basic · Gold · Premium · Elit</div>
-                    </div>
-                </div>
+        <div class="auth-brand">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"></circle>
+                <circle cx="12" cy="12" r="2.4" fill="currentColor"></circle>
+                <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"
+                      stroke="currentColor" stroke-width="1.2" opacity=".55"></path>
+            </svg>
+            MusicPlatform
+        </div>
 
-                <div class="d-flex text-sm text-fade">
-                    <span class="flex"></span>
-                    <span>&copy; @DateTime.Now.Year MusicPlatform</span>
-                </div>
+        <div class="auth-pitch">
+            <h1>Dinlediğin her şarkı<br><em>senin paketinde.</em></h1>
+            <p>
+                Dört üyelik seviyesi, tek katalog. Paketini yükselttikçe
+                katalog genişliyor — sen sadece dinlemeye devam ediyorsun.
+            </p>
+
+            <div class="auth-tiers">
+                <div class="auth-tier"><b>Basic</b><span>ücretsiz</span></div>
+                <div class="auth-tier"><b>Gold</b><span>49,90 ₺</span></div>
+                <div class="auth-tier"><b>Premium</b><span>89,90 ₺</span></div>
+                <div class="auth-tier"><b>Elit</b><span>149,90 ₺</span></div>
+            </div>
+
+            <div class="auth-eq" aria-hidden="true">
+                @for (var i = 0; i < 28; i++)
+                {
+                    <i style="animation-delay:@(-(i * 97 % 1250))ms;height:@(20 + (i * 37 % 60))%"></i>
+                }
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="p-3 p-md-5">
-
-                @if (TempData["Success"] is string success)
-                {
-                    <div class="alert alert-success py-2 px-3 text-sm">@success</div>
-                }
-                @if (TempData["Error"] is string error)
-                {
-                    <div class="alert alert-danger py-2 px-3 text-sm">@error</div>
-                }
-
-                @RenderBody()
-            </div>
+        <div class="auth-foot">
+            <span>&copy; @DateTime.Now.Year MusicPlatform</span>
+            <span>·</span>
+            <span>JWT tabanlı müzik dinleme sistemi</span>
         </div>
+    </aside>
 
-    </div>
+    @* ═══════════════════════════════════ SAĞ: form *@
+    <main class="auth-panel">
+        <div class="auth-form">
+
+            @if (TempData["Success"] is string success)
+            {
+                <div class="auth-alert auth-alert-success">@success</div>
+            }
+            @if (TempData["Error"] is string error)
+            {
+                <div class="auth-alert auth-alert-error">@error</div>
+            }
+
+            @RenderBody()
+        </div>
+    </main>
+
 </div>
 
 <script src="~/Bepop/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/Bepop/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="~/Bepop/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    // Gönderim sırasında buton kilitleme + spinner
+    document.querySelectorAll('form[data-auth-form]').forEach(function (form) {
+        form.addEventListener('submit', function () {
+            const btn = form.querySelector('.auth-submit');
+            if (btn && form.checkValidity()) btn.classList.add('busy');
+        });
+    });
+
+    // Şifre göster / gizle
+    document.querySelectorAll('.peek').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const input = btn.parentElement.querySelector('input');
+            const showing = input.type === 'text';
+            input.type = showing ? 'password' : 'text';
+            btn.innerHTML = showing ? eyeOpen : eyeOff;
+        });
+    });
+
+    const eyeOpen = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const eyeOff  = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+
+    document.querySelectorAll('.peek').forEach(b => b.innerHTML = eyeOpen);
+
+    // Şifre gücü göstergesi
+    const pwInput = document.querySelector('[data-pw-strength]');
+    if (pwInput) {
+        const meter = document.querySelector('.pw-meter');
+        pwInput.addEventListener('input', function () {
+            const v = pwInput.value;
+            let score = 0;
+            if (v.length >= 6) score++;
+            if (v.length >= 10) score++;
+            if (/[A-ZÇĞİÖŞÜ]/.test(v) && /[a-zçğıöşü]/.test(v)) score++;
+            if (/\d/.test(v) && /[^\w\s]/.test(v)) score++;
+            meter.dataset.score = v.length === 0 ? 0 : Math.max(1, score);
+        });
+    }
+</script>
 
 @await RenderSectionAsync("Scripts", required: false)
 

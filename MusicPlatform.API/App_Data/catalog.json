@@ -1,0 +1,2021 @@
+{
+ "artists": [
+  {
+   "name": "Kadir Vural",
+   "country": "Türkiye",
+   "debutYear": 2018,
+   "bio": "Sert anlatımı ve yoğun kelime oyunlarıyla tanınan rapçi."
+  },
+  {
+   "name": "MC Efe",
+   "country": "Türkiye",
+   "debutYear": 2020,
+   "bio": "Yeni nesil trap sahnesinin üretken isimlerinden."
+  },
+  {
+   "name": "Barış Kaya",
+   "country": "Türkiye",
+   "debutYear": 2017,
+   "bio": "Melodik rap ile R&B arasında gezinen prodüktör."
+  },
+  {
+   "name": "Toprak",
+   "country": "Türkiye",
+   "debutYear": 2021,
+   "bio": "Sokak anlatısını şiirsel bir dille birleştiriyor."
+  },
+  {
+   "name": "Ozan Kestane",
+   "country": "Türkiye",
+   "debutYear": 2019,
+   "bio": "Elektronik beat üretimiyle öne çıkan MC."
+  },
+  {
+   "name": "Zehir",
+   "country": "Türkiye",
+   "debutYear": 2016,
+   "bio": "Underground sahnenin köklü isimlerinden."
+  },
+  {
+   "name": "Deniz Aksoy",
+   "country": "Türkiye",
+   "debutYear": 2015,
+   "bio": "Radyo listelerinde uzun süre kalan şarkılarıyla tanınıyor."
+  },
+  {
+   "name": "Sena Yılmaz",
+   "country": "Türkiye",
+   "debutYear": 2019,
+   "bio": "Dans pop üretimleriyle dikkat çeken vokalist."
+  },
+  {
+   "name": "Mert Uçar",
+   "country": "Türkiye",
+   "debutYear": 2016,
+   "bio": "Duygusal pop şarkılarının söz yazarı ve yorumcusu."
+  },
+  {
+   "name": "Ela Demir",
+   "country": "Türkiye",
+   "debutYear": 2020,
+   "bio": "Genç kuşağın en çok dinlenen pop isimlerinden."
+  },
+  {
+   "name": "Kaan Erol",
+   "country": "Türkiye",
+   "debutYear": 2014,
+   "bio": "Gitar ağırlıklı sade prodüksiyonlarıyla biliniyor."
+  },
+  {
+   "name": "Nil Özkan",
+   "country": "Türkiye",
+   "debutYear": 2018,
+   "bio": "Güçlü vokali ve sahne performansıyla öne çıkıyor."
+  },
+  {
+   "name": "Berk Aydın",
+   "country": "Türkiye",
+   "debutYear": 2021,
+   "bio": "Synthpop etkileri taşıyan üretimleriyle tanınıyor."
+  },
+  {
+   "name": "Melis Tan",
+   "country": "Türkiye",
+   "debutYear": 2017,
+   "bio": "Şarkı sözlerindeki samimiyetle geniş kitleye ulaştı."
+  },
+  {
+   "name": "Arda Şen",
+   "country": "Türkiye",
+   "debutYear": 2013,
+   "bio": "Pop-rock çizgisinde uzun soluklu bir kariyer."
+  },
+  {
+   "name": "Yağmur Kılıç",
+   "country": "Türkiye",
+   "debutYear": 2022,
+   "bio": "Sosyal medyada keşfedilip listelere giren isim."
+  },
+  {
+   "name": "Serkan Aslan",
+   "country": "Türkiye",
+   "debutYear": 2012,
+   "bio": "Klasik arabesk geleneğini sürdüren yorumcu."
+  },
+  {
+   "name": "Hülya Er",
+   "country": "Türkiye",
+   "debutYear": 2010,
+   "bio": "Arabesk ve pop arasında köprü kuran sesiyle tanınıyor."
+  },
+  {
+   "name": "Cemal Kırmızı",
+   "country": "Türkiye",
+   "debutYear": 2008,
+   "bio": "Uzun yıllardır sahnelerde olan usta isim."
+  },
+  {
+   "name": "Gülcan Ay",
+   "country": "Türkiye",
+   "debutYear": 2019,
+   "bio": "Modern arabesk-R&B füzyonunun temsilcisi."
+  },
+  {
+   "name": "Emrah Doğan",
+   "country": "Türkiye",
+   "debutYear": 2020,
+   "bio": "Arabesk-rap türünün popüler isimlerinden."
+  },
+  {
+   "name": "Kırık Cam",
+   "country": "Türkiye",
+   "debutYear": 2011,
+   "bio": "Alternatif rock sahnesinin köklü grubu."
+  },
+  {
+   "name": "Asfalt",
+   "country": "Türkiye",
+   "debutYear": 2016,
+   "bio": "Enerjik canlı performanslarıyla tanınan üçlü."
+  },
+  {
+   "name": "Neva Tunç",
+   "country": "Türkiye",
+   "debutYear": 2018,
+   "bio": "Kadın vokalli indie rock projesi."
+  },
+  {
+   "name": "Gri Bulut",
+   "country": "Türkiye",
+   "debutYear": 2020,
+   "bio": "Post-rock ve elektronik dokular birleştiriyor."
+  },
+  {
+   "name": "Volt",
+   "country": "Türkiye",
+   "debutYear": 2019,
+   "bio": "Deneysel elektronik prodüksiyon projesi."
+  },
+  {
+   "name": "Nova Kod",
+   "country": "Türkiye",
+   "debutYear": 2021,
+   "bio": "Synthwave etkileri taşıyan ikili."
+  },
+  {
+   "name": "Frekans",
+   "country": "Türkiye",
+   "debutYear": 2017,
+   "bio": "Kulüp sahnesinde tanınan DJ ve prodüktör."
+  },
+  {
+   "name": "Ay Işığı",
+   "country": "Türkiye",
+   "debutYear": 2022,
+   "bio": "Ambient ve downtempo üretimler."
+  },
+  {
+   "name": "Ada Ünal",
+   "country": "Türkiye",
+   "debutYear": 2019,
+   "bio": "Tek gitarla kaydettiği şarkılarla tanındı."
+  },
+  {
+   "name": "Sarı Defter",
+   "country": "Türkiye",
+   "debutYear": 2020,
+   "bio": "Minimal enstrümantasyon, sade anlatım."
+  },
+  {
+   "name": "Poyraz",
+   "country": "Türkiye",
+   "debutYear": 2015,
+   "bio": "Anadolu ezgilerini akustik düzenlemelerle yorumluyor."
+  },
+  {
+   "name": "Leyla Cans",
+   "country": "Türkiye",
+   "debutYear": 2014,
+   "bio": "Caz standartlarını Türkçe yorumlayan vokalist."
+  },
+  {
+   "name": "Trio Mavi",
+   "country": "Türkiye",
+   "debutYear": 2012,
+   "bio": "Piyano-bas-davul üçlüsü."
+  },
+  {
+   "name": "Soul Kumpanya",
+   "country": "Türkiye",
+   "debutYear": 2018,
+   "bio": "Neo-soul ve funk etkili topluluk."
+  },
+  {
+   "name": "Naz Berk",
+   "country": "Türkiye",
+   "debutYear": 2021,
+   "bio": "R&B vokal geleneğini modern prodüksiyonla buluşturuyor."
+  }
+ ],
+ "albums": [
+  {
+   "title": "İlk Bölüm",
+   "artistName": "Kadir Vural",
+   "releaseYear": 2020
+  },
+  {
+   "title": "Gece Kayıtları",
+   "artistName": "Kadir Vural",
+   "releaseYear": 2026
+  },
+  {
+   "title": "Yankı",
+   "artistName": "MC Efe",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Serbest Düşüş",
+   "artistName": "Barış Kaya",
+   "releaseYear": 2021
+  },
+  {
+   "title": "Mavi Dönem",
+   "artistName": "Toprak",
+   "releaseYear": 2026
+  },
+  {
+   "title": "Kum ve Cam",
+   "artistName": "Ozan Kestane",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Uzak Duraklar",
+   "artistName": "Ozan Kestane",
+   "releaseYear": 2020
+  },
+  {
+   "title": "Solo",
+   "artistName": "Zehir",
+   "releaseYear": 2022
+  },
+  {
+   "title": "Kuzey",
+   "artistName": "Deniz Aksoy",
+   "releaseYear": 2015
+  },
+  {
+   "title": "Renksiz",
+   "artistName": "Sena Yılmaz",
+   "releaseYear": 2024
+  },
+  {
+   "title": "Yeniden Doğuş",
+   "artistName": "Sena Yılmaz",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Gölge Tiyatrosu",
+   "artistName": "Mert Uçar",
+   "releaseYear": 2022
+  },
+  {
+   "title": "Sessiz Kayıt",
+   "artistName": "Ela Demir",
+   "releaseYear": 2026
+  },
+  {
+   "title": "Yol Notları",
+   "artistName": "Nil Özkan",
+   "releaseYear": 2018
+  },
+  {
+   "title": "Kırık Notalar",
+   "artistName": "Berk Aydın",
+   "releaseYear": 2026
+  },
+  {
+   "title": "Sonsuz",
+   "artistName": "Melis Tan",
+   "releaseYear": 2021
+  },
+  {
+   "title": "Elektrik Çağı",
+   "artistName": "Yağmur Kılıç",
+   "releaseYear": 2026
+  },
+  {
+   "title": "Toprak",
+   "artistName": "Serkan Aslan",
+   "releaseYear": 2022
+  },
+  {
+   "title": "Deniz Feneri",
+   "artistName": "Hülya Er",
+   "releaseYear": 2022
+  },
+  {
+   "title": "Beyaz Oda",
+   "artistName": "Cemal Kırmızı",
+   "releaseYear": 2020
+  },
+  {
+   "title": "Ay Tutulması",
+   "artistName": "Cemal Kırmızı",
+   "releaseYear": 2025
+  },
+  {
+   "title": "Karanfil Bahçesi",
+   "artistName": "Gülcan Ay",
+   "releaseYear": 2024
+  },
+  {
+   "title": "Son Perde",
+   "artistName": "Emrah Doğan",
+   "releaseYear": 2024
+  },
+  {
+   "title": "Anadolu",
+   "artistName": "Asfalt",
+   "releaseYear": 2021
+  },
+  {
+   "title": "Gece Yarısı Seansları",
+   "artistName": "Neva Tunç",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Akustik Odalar",
+   "artistName": "Gri Bulut",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Frekanslar",
+   "artistName": "Gri Bulut",
+   "releaseYear": 2024
+  },
+  {
+   "title": "İz",
+   "artistName": "Nova Kod",
+   "releaseYear": 2022
+  },
+  {
+   "title": "İlk Bölüm",
+   "artistName": "Nova Kod",
+   "releaseYear": 2024
+  },
+  {
+   "title": "Gece Kayıtları",
+   "artistName": "Frekans",
+   "releaseYear": 2021
+  },
+  {
+   "title": "Yankı",
+   "artistName": "Frekans",
+   "releaseYear": 2022
+  },
+  {
+   "title": "Serbest Düşüş",
+   "artistName": "Ay Işığı",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Mavi Dönem",
+   "artistName": "Ay Işığı",
+   "releaseYear": 2024
+  },
+  {
+   "title": "Kum ve Cam",
+   "artistName": "Ada Ünal",
+   "releaseYear": 2024
+  },
+  {
+   "title": "Uzak Duraklar",
+   "artistName": "Ada Ünal",
+   "releaseYear": 2025
+  },
+  {
+   "title": "Solo",
+   "artistName": "Sarı Defter",
+   "releaseYear": 2023
+  },
+  {
+   "title": "Kuzey",
+   "artistName": "Poyraz",
+   "releaseYear": 2017
+  },
+  {
+   "title": "Renksiz",
+   "artistName": "Soul Kumpanya",
+   "releaseYear": 2021
+  }
+ ],
+ "songs": [
+  {
+   "title": "Sessiz Alarm",
+   "artistName": "Kadir Vural",
+   "albumTitle": "İlk Bölüm",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-000.jpg",
+   "durationSeconds": 264,
+   "playCount": 314395,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Yağmur Sonrası",
+   "artistName": "Kadir Vural",
+   "albumTitle": "Gece Kayıtları",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-001.jpg",
+   "durationSeconds": 227,
+   "playCount": 84749,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Son Vals",
+   "artistName": "Kadir Vural",
+   "albumTitle": null,
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-002.jpg",
+   "durationSeconds": 259,
+   "playCount": 308048,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Kalbim Sende",
+   "artistName": "Kadir Vural",
+   "albumTitle": "Gece Kayıtları",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-003.jpg",
+   "durationSeconds": 245,
+   "playCount": 78675,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Geç Kalma",
+   "artistName": "MC Efe",
+   "albumTitle": "Yankı",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-004.jpg",
+   "durationSeconds": 191,
+   "playCount": 466247,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Uzun Yol",
+   "artistName": "MC Efe",
+   "albumTitle": "Yankı",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-005.jpg",
+   "durationSeconds": 224,
+   "playCount": 186084,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Karanfil",
+   "artistName": "MC Efe",
+   "albumTitle": null,
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-006.jpg",
+   "durationSeconds": 145,
+   "playCount": 268390,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Kayıp Zaman",
+   "artistName": "Barış Kaya",
+   "albumTitle": "Serbest Düşüş",
+   "genres": [
+    "Rap",
+    "R&B"
+   ],
+   "coverFile": "gen-007.jpg",
+   "durationSeconds": 215,
+   "playCount": 325127,
+   "releaseYear": 2019
+  },
+  {
+   "title": "Aynı Gökyüzü",
+   "artistName": "Barış Kaya",
+   "albumTitle": "Serbest Düşüş",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-008.jpg",
+   "durationSeconds": 200,
+   "playCount": 314439,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Bir Tutam",
+   "artistName": "Barış Kaya",
+   "albumTitle": "Serbest Düşüş",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-009.jpg",
+   "durationSeconds": 147,
+   "playCount": 340659,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Sessizlik",
+   "artistName": "Barış Kaya",
+   "albumTitle": null,
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-010.jpg",
+   "durationSeconds": 166,
+   "playCount": 254471,
+   "releaseYear": 2017
+  },
+  {
+   "title": "Perde Arkası",
+   "artistName": "Toprak",
+   "albumTitle": "Mavi Dönem",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-011.jpg",
+   "durationSeconds": 162,
+   "playCount": 347471,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Kayıp Melodi",
+   "artistName": "Toprak",
+   "albumTitle": "Mavi Dönem",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-012.jpg",
+   "durationSeconds": 210,
+   "playCount": 217900,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Uykusuz",
+   "artistName": "Toprak",
+   "albumTitle": "Mavi Dönem",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-013.jpg",
+   "durationSeconds": 186,
+   "playCount": 92390,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Yarım Kalan",
+   "artistName": "Toprak",
+   "albumTitle": "Mavi Dönem",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-014.jpg",
+   "durationSeconds": 178,
+   "playCount": 246009,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Kalbe Dokun",
+   "artistName": "Toprak",
+   "albumTitle": "Mavi Dönem",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-015.jpg",
+   "durationSeconds": 198,
+   "playCount": 63769,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Ay Vurdu",
+   "artistName": "Ozan Kestane",
+   "albumTitle": null,
+   "genres": [
+    "Rap",
+    "Electronic"
+   ],
+   "coverFile": "gen-016.jpg",
+   "durationSeconds": 254,
+   "playCount": 238886,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Kırık Ayna",
+   "artistName": "Ozan Kestane",
+   "albumTitle": null,
+   "genres": [
+    "Rap",
+    "Electronic"
+   ],
+   "coverFile": "gen-017.jpg",
+   "durationSeconds": 250,
+   "playCount": 352282,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Kaçak Yolcu",
+   "artistName": "Ozan Kestane",
+   "albumTitle": "Kum ve Cam",
+   "genres": [
+    "Rap",
+    "Electronic"
+   ],
+   "coverFile": "gen-018.jpg",
+   "durationSeconds": 156,
+   "playCount": 326269,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Fırtına",
+   "artistName": "Ozan Kestane",
+   "albumTitle": "Kum ve Cam",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-019.jpg",
+   "durationSeconds": 154,
+   "playCount": 410552,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Gölge Oyunu",
+   "artistName": "Zehir",
+   "albumTitle": "Solo",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-020.jpg",
+   "durationSeconds": 239,
+   "playCount": 187579,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Bitmeyen Yaz",
+   "artistName": "Zehir",
+   "albumTitle": "Solo",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-021.jpg",
+   "durationSeconds": 206,
+   "playCount": 165190,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Susma",
+   "artistName": "Zehir",
+   "albumTitle": "Solo",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-022.jpg",
+   "durationSeconds": 179,
+   "playCount": 165741,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Yalın Ayak",
+   "artistName": "Zehir",
+   "albumTitle": "Solo",
+   "genres": [
+    "Rap"
+   ],
+   "coverFile": "gen-023.jpg",
+   "durationSeconds": 143,
+   "playCount": 216619,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Denizde Kaybol",
+   "artistName": "Deniz Aksoy",
+   "albumTitle": "Kuzey",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-024.jpg",
+   "durationSeconds": 144,
+   "playCount": 163286,
+   "releaseYear": 2017
+  },
+  {
+   "title": "İki Yabancı",
+   "artistName": "Deniz Aksoy",
+   "albumTitle": "Kuzey",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-025.jpg",
+   "durationSeconds": 182,
+   "playCount": 409617,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Uzak Yıldız",
+   "artistName": "Deniz Aksoy",
+   "albumTitle": "Kuzey",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-026.jpg",
+   "durationSeconds": 260,
+   "playCount": 212712,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Yanılmışım",
+   "artistName": "Deniz Aksoy",
+   "albumTitle": "Kuzey",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-027.jpg",
+   "durationSeconds": 196,
+   "playCount": 355176,
+   "releaseYear": 2017
+  },
+  {
+   "title": "Ay Işığında",
+   "artistName": "Sena Yılmaz",
+   "albumTitle": null,
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-028.jpg",
+   "durationSeconds": 149,
+   "playCount": 386354,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Buğulu Cam",
+   "artistName": "Sena Yılmaz",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-029.jpg",
+   "durationSeconds": 180,
+   "playCount": 403397,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Uzun İnce",
+   "artistName": "Sena Yılmaz",
+   "albumTitle": "Yeniden Doğuş",
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-030.jpg",
+   "durationSeconds": 167,
+   "playCount": 294853,
+   "releaseYear": 2019
+  },
+  {
+   "title": "Kırgın Sesler",
+   "artistName": "Sena Yılmaz",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-031.jpg",
+   "durationSeconds": 158,
+   "playCount": 274784,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Son Duraklar",
+   "artistName": "Sena Yılmaz",
+   "albumTitle": "Yeniden Doğuş",
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-032.jpg",
+   "durationSeconds": 195,
+   "playCount": 202182,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Yanan Kağıt",
+   "artistName": "Mert Uçar",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-033.jpg",
+   "durationSeconds": 241,
+   "playCount": 66445,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Beni Bırakma",
+   "artistName": "Mert Uçar",
+   "albumTitle": "Gölge Tiyatrosu",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-034.jpg",
+   "durationSeconds": 255,
+   "playCount": 134479,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Kalp Atışı",
+   "artistName": "Mert Uçar",
+   "albumTitle": "Gölge Tiyatrosu",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-035.jpg",
+   "durationSeconds": 177,
+   "playCount": 284518,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Fırtına Öncesi",
+   "artistName": "Mert Uçar",
+   "albumTitle": "Gölge Tiyatrosu",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-036.jpg",
+   "durationSeconds": 159,
+   "playCount": 329412,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Ay Tutulması",
+   "artistName": "Ela Demir",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-037.jpg",
+   "durationSeconds": 265,
+   "playCount": 432700,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Yıldızlar Altında",
+   "artistName": "Ela Demir",
+   "albumTitle": "Sessiz Kayıt",
+   "genres": [
+    "Pop",
+    "R&B"
+   ],
+   "coverFile": "gen-038.jpg",
+   "durationSeconds": 149,
+   "playCount": 345712,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Sonsuz Döngü",
+   "artistName": "Ela Demir",
+   "albumTitle": "Sessiz Kayıt",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-039.jpg",
+   "durationSeconds": 266,
+   "playCount": 117107,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Bahar Gelince",
+   "artistName": "Ela Demir",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-040.jpg",
+   "durationSeconds": 193,
+   "playCount": 371612,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Kaybolan İz",
+   "artistName": "Ela Demir",
+   "albumTitle": "Sessiz Kayıt",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-041.jpg",
+   "durationSeconds": 189,
+   "playCount": 189076,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Kırılan Cam",
+   "artistName": "Kaan Erol",
+   "albumTitle": null,
+   "genres": [
+    "Pop",
+    "Akustik"
+   ],
+   "coverFile": "gen-042.jpg",
+   "durationSeconds": 202,
+   "playCount": 471098,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Susan Şehir",
+   "artistName": "Kaan Erol",
+   "albumTitle": null,
+   "genres": [
+    "Pop",
+    "Akustik"
+   ],
+   "coverFile": "gen-043.jpg",
+   "durationSeconds": 222,
+   "playCount": 216040,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Uçurum Kenarı",
+   "artistName": "Nil Özkan",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-044.jpg",
+   "durationSeconds": 246,
+   "playCount": 438611,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Gece Kuşu",
+   "artistName": "Nil Özkan",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-045.jpg",
+   "durationSeconds": 243,
+   "playCount": 20464,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Bir İhtimal",
+   "artistName": "Nil Özkan",
+   "albumTitle": "Yol Notları",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-046.jpg",
+   "durationSeconds": 211,
+   "playCount": 384058,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Camdan Kule",
+   "artistName": "Berk Aydın",
+   "albumTitle": "Kırık Notalar",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-047.jpg",
+   "durationSeconds": 250,
+   "playCount": 445769,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Gri Şehir",
+   "artistName": "Berk Aydın",
+   "albumTitle": null,
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-048.jpg",
+   "durationSeconds": 190,
+   "playCount": 283381,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Son Mektup",
+   "artistName": "Berk Aydın",
+   "albumTitle": "Kırık Notalar",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-049.jpg",
+   "durationSeconds": 235,
+   "playCount": 204859,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Gökyüzü Mavi",
+   "artistName": "Berk Aydın",
+   "albumTitle": null,
+   "genres": [
+    "Pop",
+    "Electronic"
+   ],
+   "coverFile": "gen-050.jpg",
+   "durationSeconds": 226,
+   "playCount": 413542,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Sonbahar Yaprakları",
+   "artistName": "Melis Tan",
+   "albumTitle": "Sonsuz",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-051.jpg",
+   "durationSeconds": 187,
+   "playCount": 71057,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Duvar Yazısı",
+   "artistName": "Melis Tan",
+   "albumTitle": "Sonsuz",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-052.jpg",
+   "durationSeconds": 250,
+   "playCount": 318492,
+   "releaseYear": 2024
+  },
+  {
+   "title": "İçimdeki Ses",
+   "artistName": "Melis Tan",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-053.jpg",
+   "durationSeconds": 187,
+   "playCount": 426589,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Beyaz Perde",
+   "artistName": "Melis Tan",
+   "albumTitle": "Sonsuz",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-054.jpg",
+   "durationSeconds": 164,
+   "playCount": 165778,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Yalnız Değilim",
+   "artistName": "Arda Şen",
+   "albumTitle": null,
+   "genres": [
+    "Pop",
+    "Rock"
+   ],
+   "coverFile": "gen-055.jpg",
+   "durationSeconds": 255,
+   "playCount": 61983,
+   "releaseYear": 2024
+  },
+  {
+   "title": "İlk Kar",
+   "artistName": "Arda Şen",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-056.jpg",
+   "durationSeconds": 150,
+   "playCount": 193736,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Dönüş Yok",
+   "artistName": "Yağmur Kılıç",
+   "albumTitle": "Elektrik Çağı",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-057.jpg",
+   "durationSeconds": 158,
+   "playCount": 56515,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Yıldız Tozu",
+   "artistName": "Yağmur Kılıç",
+   "albumTitle": "Elektrik Çağı",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-058.jpg",
+   "durationSeconds": 190,
+   "playCount": 138462,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Küçük Dünya",
+   "artistName": "Yağmur Kılıç",
+   "albumTitle": "Elektrik Çağı",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-059.jpg",
+   "durationSeconds": 186,
+   "playCount": 249512,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Susuz Yaz",
+   "artistName": "Yağmur Kılıç",
+   "albumTitle": "Elektrik Çağı",
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-060.jpg",
+   "durationSeconds": 248,
+   "playCount": 188850,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Gizli Bahçe",
+   "artistName": "Yağmur Kılıç",
+   "albumTitle": null,
+   "genres": [
+    "Pop"
+   ],
+   "coverFile": "gen-061.jpg",
+   "durationSeconds": 186,
+   "playCount": 44079,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Uzak Şehir",
+   "artistName": "Serkan Aslan",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-062.jpg",
+   "durationSeconds": 175,
+   "playCount": 395742,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Uzaklara",
+   "artistName": "Serkan Aslan",
+   "albumTitle": "Toprak",
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-063.jpg",
+   "durationSeconds": 197,
+   "playCount": 266232,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Vazgeçmem",
+   "artistName": "Serkan Aslan",
+   "albumTitle": "Toprak",
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-064.jpg",
+   "durationSeconds": 193,
+   "playCount": 165259,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Yeni Başlangıç",
+   "artistName": "Hülya Er",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-065.jpg",
+   "durationSeconds": 239,
+   "playCount": 413511,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Kırmızı Işık",
+   "artistName": "Hülya Er",
+   "albumTitle": "Deniz Feneri",
+   "genres": [
+    "Arabesk",
+    "Pop"
+   ],
+   "coverFile": "gen-066.jpg",
+   "durationSeconds": 161,
+   "playCount": 232363,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Elektrik",
+   "artistName": "Hülya Er",
+   "albumTitle": "Deniz Feneri",
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-067.jpg",
+   "durationSeconds": 182,
+   "playCount": 140499,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Kayıp Şehir",
+   "artistName": "Hülya Er",
+   "albumTitle": "Deniz Feneri",
+   "genres": [
+    "Arabesk",
+    "Pop"
+   ],
+   "coverFile": "gen-068.jpg",
+   "durationSeconds": 184,
+   "playCount": 76016,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Sonbahar",
+   "artistName": "Hülya Er",
+   "albumTitle": "Deniz Feneri",
+   "genres": [
+    "Arabesk",
+    "Pop"
+   ],
+   "coverFile": "gen-069.jpg",
+   "durationSeconds": 193,
+   "playCount": 12187,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Hayal Perdesi",
+   "artistName": "Cemal Kırmızı",
+   "albumTitle": "Beyaz Oda",
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-070.jpg",
+   "durationSeconds": 228,
+   "playCount": 403009,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Solgun Fotoğraf",
+   "artistName": "Cemal Kırmızı",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-071.jpg",
+   "durationSeconds": 250,
+   "playCount": 332667,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Son Otobüs",
+   "artistName": "Cemal Kırmızı",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-072.jpg",
+   "durationSeconds": 208,
+   "playCount": 110854,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Kimsesiz",
+   "artistName": "Gülcan Ay",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-073.jpg",
+   "durationSeconds": 143,
+   "playCount": 140813,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Gece Nöbeti",
+   "artistName": "Gülcan Ay",
+   "albumTitle": "Karanfil Bahçesi",
+   "genres": [
+    "Arabesk",
+    "R&B"
+   ],
+   "coverFile": "gen-074.jpg",
+   "durationSeconds": 248,
+   "playCount": 408801,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Yol Ayrımı",
+   "artistName": "Gülcan Ay",
+   "albumTitle": "Karanfil Bahçesi",
+   "genres": [
+    "Arabesk",
+    "R&B"
+   ],
+   "coverFile": "gen-075.jpg",
+   "durationSeconds": 223,
+   "playCount": 64155,
+   "releaseYear": 2023
+  },
+  {
+   "title": "İz Bırak",
+   "artistName": "Gülcan Ay",
+   "albumTitle": "Karanfil Bahçesi",
+   "genres": [
+    "Arabesk",
+    "R&B"
+   ],
+   "coverFile": "gen-076.jpg",
+   "durationSeconds": 207,
+   "playCount": 145980,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Kırık Saat",
+   "artistName": "Emrah Doğan",
+   "albumTitle": "Son Perde",
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-077.jpg",
+   "durationSeconds": 161,
+   "playCount": 173806,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Gökkuşağı",
+   "artistName": "Emrah Doğan",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk",
+    "Rap"
+   ],
+   "coverFile": "gen-078.jpg",
+   "durationSeconds": 232,
+   "playCount": 163039,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Gece Treni",
+   "artistName": "Emrah Doğan",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk",
+    "Rap"
+   ],
+   "coverFile": "gen-079.jpg",
+   "durationSeconds": 213,
+   "playCount": 70662,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Buz Tutmuş",
+   "artistName": "Emrah Doğan",
+   "albumTitle": "Son Perde",
+   "genres": [
+    "Arabesk",
+    "Rap"
+   ],
+   "coverFile": "gen-080.jpg",
+   "durationSeconds": 212,
+   "playCount": 385758,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Sokak Lambası",
+   "artistName": "Emrah Doğan",
+   "albumTitle": null,
+   "genres": [
+    "Arabesk"
+   ],
+   "coverFile": "gen-081.jpg",
+   "durationSeconds": 226,
+   "playCount": 348429,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Bir Nefes",
+   "artistName": "Kırık Cam",
+   "albumTitle": null,
+   "genres": [
+    "Rock"
+   ],
+   "coverFile": "gen-082.jpg",
+   "durationSeconds": 185,
+   "playCount": 182944,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Sarmaşık",
+   "artistName": "Kırık Cam",
+   "albumTitle": null,
+   "genres": [
+    "Rock"
+   ],
+   "coverFile": "gen-083.jpg",
+   "durationSeconds": 219,
+   "playCount": 252296,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Aynı Şarkı",
+   "artistName": "Asfalt",
+   "albumTitle": "Anadolu",
+   "genres": [
+    "Rock",
+    "Pop"
+   ],
+   "coverFile": "gen-084.jpg",
+   "durationSeconds": 203,
+   "playCount": 424923,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Sessiz Sinema",
+   "artistName": "Asfalt",
+   "albumTitle": "Anadolu",
+   "genres": [
+    "Rock",
+    "Pop"
+   ],
+   "coverFile": "gen-085.jpg",
+   "durationSeconds": 177,
+   "playCount": 269389,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Sonuncu Dans",
+   "artistName": "Asfalt",
+   "albumTitle": "Anadolu",
+   "genres": [
+    "Rock",
+    "Pop"
+   ],
+   "coverFile": "gen-086.jpg",
+   "durationSeconds": 252,
+   "playCount": 34645,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Söz Ver",
+   "artistName": "Asfalt",
+   "albumTitle": "Anadolu",
+   "genres": [
+    "Rock",
+    "Pop"
+   ],
+   "coverFile": "gen-087.jpg",
+   "durationSeconds": 204,
+   "playCount": 167489,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Kaybol",
+   "artistName": "Neva Tunç",
+   "albumTitle": "Gece Yarısı Seansları",
+   "genres": [
+    "Rock",
+    "Akustik"
+   ],
+   "coverFile": "gen-088.jpg",
+   "durationSeconds": 239,
+   "playCount": 135798,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Sessiz Çığlık",
+   "artistName": "Neva Tunç",
+   "albumTitle": null,
+   "genres": [
+    "Rock",
+    "Akustik"
+   ],
+   "coverFile": "gen-089.jpg",
+   "durationSeconds": 267,
+   "playCount": 113439,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Sabaha Karşı",
+   "artistName": "Neva Tunç",
+   "albumTitle": "Gece Yarısı Seansları",
+   "genres": [
+    "Rock",
+    "Akustik"
+   ],
+   "coverFile": "gen-090.jpg",
+   "durationSeconds": 207,
+   "playCount": 111570,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Karanlık Oda",
+   "artistName": "Neva Tunç",
+   "albumTitle": null,
+   "genres": [
+    "Rock",
+    "Akustik"
+   ],
+   "coverFile": "gen-091.jpg",
+   "durationSeconds": 251,
+   "playCount": 171592,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Rüzgar Gülü",
+   "artistName": "Gri Bulut",
+   "albumTitle": "Akustik Odalar",
+   "genres": [
+    "Rock",
+    "Electronic"
+   ],
+   "coverFile": "gen-092.jpg",
+   "durationSeconds": 235,
+   "playCount": 76285,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Ateş Böceği",
+   "artistName": "Gri Bulut",
+   "albumTitle": null,
+   "genres": [
+    "Rock"
+   ],
+   "coverFile": "gen-093.jpg",
+   "durationSeconds": 177,
+   "playCount": 414731,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Yol Boyu",
+   "artistName": "Gri Bulut",
+   "albumTitle": null,
+   "genres": [
+    "Rock",
+    "Electronic"
+   ],
+   "coverFile": "gen-094.jpg",
+   "durationSeconds": 230,
+   "playCount": 187787,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Gece Yarısı",
+   "artistName": "Volt",
+   "albumTitle": null,
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-095.jpg",
+   "durationSeconds": 200,
+   "playCount": 89034,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Ters Yön",
+   "artistName": "Volt",
+   "albumTitle": null,
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-096.jpg",
+   "durationSeconds": 230,
+   "playCount": 28924,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Kırılgan",
+   "artistName": "Nova Kod",
+   "albumTitle": null,
+   "genres": [
+    "Electronic",
+    "Pop"
+   ],
+   "coverFile": "gen-097.jpg",
+   "durationSeconds": 180,
+   "playCount": 116634,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Bir Sonbahar",
+   "artistName": "Nova Kod",
+   "albumTitle": "İlk Bölüm",
+   "genres": [
+    "Electronic",
+    "Pop"
+   ],
+   "coverFile": "gen-098.jpg",
+   "durationSeconds": 161,
+   "playCount": 472728,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Beyaz Gece",
+   "artistName": "Nova Kod",
+   "albumTitle": "İz",
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-099.jpg",
+   "durationSeconds": 149,
+   "playCount": 50427,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Gölgeler",
+   "artistName": "Frekans",
+   "albumTitle": null,
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-100.jpg",
+   "durationSeconds": 162,
+   "playCount": 264654,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Bir Adım Öte",
+   "artistName": "Frekans",
+   "albumTitle": null,
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-101.jpg",
+   "durationSeconds": 153,
+   "playCount": 222490,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Rüzgara Karşı",
+   "artistName": "Frekans",
+   "albumTitle": "Gece Kayıtları",
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-102.jpg",
+   "durationSeconds": 172,
+   "playCount": 118582,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Kaybettim",
+   "artistName": "Frekans",
+   "albumTitle": "Gece Kayıtları",
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-103.jpg",
+   "durationSeconds": 210,
+   "playCount": 457138,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Bir Gün",
+   "artistName": "Frekans",
+   "albumTitle": null,
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-104.jpg",
+   "durationSeconds": 200,
+   "playCount": 449678,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Anlat Bana",
+   "artistName": "Ay Işığı",
+   "albumTitle": "Mavi Dönem",
+   "genres": [
+    "Electronic",
+    "Akustik"
+   ],
+   "coverFile": "gen-105.jpg",
+   "durationSeconds": 153,
+   "playCount": 461497,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Sahilde",
+   "artistName": "Ay Işığı",
+   "albumTitle": "Serbest Düşüş",
+   "genres": [
+    "Electronic",
+    "Akustik"
+   ],
+   "coverFile": "gen-106.jpg",
+   "durationSeconds": 156,
+   "playCount": 91041,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Yeniden",
+   "artistName": "Ay Işığı",
+   "albumTitle": null,
+   "genres": [
+    "Electronic",
+    "Akustik"
+   ],
+   "coverFile": "gen-107.jpg",
+   "durationSeconds": 267,
+   "playCount": 225141,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Beni Anlat",
+   "artistName": "Ay Işığı",
+   "albumTitle": null,
+   "genres": [
+    "Electronic"
+   ],
+   "coverFile": "gen-108.jpg",
+   "durationSeconds": 243,
+   "playCount": 141692,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Gece Mavisi",
+   "artistName": "Ada Ünal",
+   "albumTitle": "Uzak Duraklar",
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-109.jpg",
+   "durationSeconds": 249,
+   "playCount": 186493,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Geri Sayım",
+   "artistName": "Ada Ünal",
+   "albumTitle": "Kum ve Cam",
+   "genres": [
+    "Akustik",
+    "Pop"
+   ],
+   "coverFile": "gen-110.jpg",
+   "durationSeconds": 266,
+   "playCount": 189016,
+   "releaseYear": 2026
+  },
+  {
+   "title": "Sıcak Kum",
+   "artistName": "Ada Ünal",
+   "albumTitle": "Uzak Duraklar",
+   "genres": [
+    "Akustik",
+    "Pop"
+   ],
+   "coverFile": "gen-111.jpg",
+   "durationSeconds": 238,
+   "playCount": 134418,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Kuzey Rüzgarı",
+   "artistName": "Sarı Defter",
+   "albumTitle": "Solo",
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-112.jpg",
+   "durationSeconds": 246,
+   "playCount": 145564,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Mavi Işık",
+   "artistName": "Sarı Defter",
+   "albumTitle": "Solo",
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-113.jpg",
+   "durationSeconds": 150,
+   "playCount": 277434,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Yalnız Yolcu",
+   "artistName": "Sarı Defter",
+   "albumTitle": "Solo",
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-114.jpg",
+   "durationSeconds": 244,
+   "playCount": 339211,
+   "releaseYear": 2026
+  },
+  {
+   "title": "İki Damla",
+   "artistName": "Sarı Defter",
+   "albumTitle": "Solo",
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-115.jpg",
+   "durationSeconds": 220,
+   "playCount": 251740,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Rüya Görme",
+   "artistName": "Poyraz",
+   "albumTitle": "Kuzey",
+   "genres": [
+    "Akustik",
+    "Rock"
+   ],
+   "coverFile": "gen-116.jpg",
+   "durationSeconds": 163,
+   "playCount": 281172,
+   "releaseYear": 2020
+  },
+  {
+   "title": "Zaman Tüneli",
+   "artistName": "Poyraz",
+   "albumTitle": null,
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-117.jpg",
+   "durationSeconds": 151,
+   "playCount": 395368,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Yankı",
+   "artistName": "Poyraz",
+   "albumTitle": null,
+   "genres": [
+    "Akustik"
+   ],
+   "coverFile": "gen-118.jpg",
+   "durationSeconds": 184,
+   "playCount": 376838,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Kum Saati",
+   "artistName": "Leyla Cans",
+   "albumTitle": null,
+   "genres": [
+    "Jazz"
+   ],
+   "coverFile": "gen-119.jpg",
+   "durationSeconds": 181,
+   "playCount": 247624,
+   "releaseYear": 2019
+  },
+  {
+   "title": "Sessiz Alarm",
+   "artistName": "Leyla Cans",
+   "albumTitle": null,
+   "genres": [
+    "Jazz"
+   ],
+   "coverFile": "gen-120.jpg",
+   "durationSeconds": 183,
+   "playCount": 376695,
+   "releaseYear": 2023
+  },
+  {
+   "title": "Yağmur Sonrası",
+   "artistName": "Trio Mavi",
+   "albumTitle": null,
+   "genres": [
+    "Jazz"
+   ],
+   "coverFile": "gen-121.jpg",
+   "durationSeconds": 207,
+   "playCount": 452309,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Son Vals",
+   "artistName": "Trio Mavi",
+   "albumTitle": null,
+   "genres": [
+    "Jazz",
+    "Akustik"
+   ],
+   "coverFile": "gen-122.jpg",
+   "durationSeconds": 173,
+   "playCount": 313112,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Kalbim Sende",
+   "artistName": "Soul Kumpanya",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "R&B"
+   ],
+   "coverFile": "gen-123.jpg",
+   "durationSeconds": 209,
+   "playCount": 9371,
+   "releaseYear": 2025
+  },
+  {
+   "title": "Geç Kalma",
+   "artistName": "Soul Kumpanya",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "R&B",
+    "Jazz"
+   ],
+   "coverFile": "gen-124.jpg",
+   "durationSeconds": 242,
+   "playCount": 74351,
+   "releaseYear": 2022
+  },
+  {
+   "title": "Uzun Yol",
+   "artistName": "Soul Kumpanya",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "R&B"
+   ],
+   "coverFile": "gen-125.jpg",
+   "durationSeconds": 252,
+   "playCount": 386289,
+   "releaseYear": 2018
+  },
+  {
+   "title": "Karanfil",
+   "artistName": "Soul Kumpanya",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "R&B",
+    "Jazz"
+   ],
+   "coverFile": "gen-126.jpg",
+   "durationSeconds": 214,
+   "playCount": 193993,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Kayıp Zaman",
+   "artistName": "Soul Kumpanya",
+   "albumTitle": "Renksiz",
+   "genres": [
+    "R&B"
+   ],
+   "coverFile": "gen-127.jpg",
+   "durationSeconds": 244,
+   "playCount": 56195,
+   "releaseYear": 2024
+  },
+  {
+   "title": "Aynı Gökyüzü",
+   "artistName": "Naz Berk",
+   "albumTitle": null,
+   "genres": [
+    "R&B",
+    "Pop"
+   ],
+   "coverFile": "gen-128.jpg",
+   "durationSeconds": 173,
+   "playCount": 103897,
+   "releaseYear": 2021
+  },
+  {
+   "title": "Bir Tutam",
+   "artistName": "Naz Berk",
+   "albumTitle": null,
+   "genres": [
+    "R&B",
+    "Pop"
+   ],
+   "coverFile": "gen-129.jpg",
+   "durationSeconds": 163,
+   "playCount": 275905,
+   "releaseYear": 2023
+  }
+ ]
+}

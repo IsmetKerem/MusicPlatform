@@ -15,10 +15,14 @@
         <PackageReference Include="Serilog.Sinks.File" Version="8.0.0-nblumhardt-02322" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
+    <ItemGroup>
+        <None Update="App_Data\catalog.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 
     <ItemGroup>
       <Folder Include="App_Data\avatars\" />
-      <Folder Include="wwwroot\covers\" />
     </ItemGroup>
 
     <ItemGroup>

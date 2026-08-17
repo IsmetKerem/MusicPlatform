@@ -4,55 +4,50 @@
     Layout = "_AuthLayout";
 }
 
-<h5>Tekrar hoş geldin</h5>
-<p><small class="text-muted">Hesabına giriş yap ve dinlemeye devam et</small></p>
+<h2>Tekrar hoş geldin</h2>
+<div class="lede">Hesabına giriş yap, kaldığın yerden devam et.</div>
 
-<form asp-action="Login" method="post" class="mt-4">
+<form asp-action="Login" method="post" data-auth-form>
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="ReturnUrl" />
 
-    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 px-3 text-sm"></div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="auth-alert auth-alert-error">
+            <div asp-validation-summary="ModelOnly"></div>
+        </div>
+    }
 
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" placeholder="ornek@mail.com" autocomplete="email" />
-        <span asp-validation-for="Email" class="text-danger text-sm"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" placeholder="••••••••" autocomplete="current-password" />
-        <span asp-validation-for="Password" class="text-danger text-sm"></span>
-        <div class="my-3 text-right">
-            <a asp-action="ForgotPassword" class="text-muted">Şifremi unuttum</a>
+    <div class="auth-row">
+        <div class="field">
+            <input asp-for="Email" type="email" placeholder=" " autocomplete="email" autofocus />
+            <label asp-for="Email">E-posta</label>
+            <span asp-validation-for="Email" class="field-error"></span>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-block mb-4">Giriş Yap</button>
+    <div class="auth-row">
+        <div class="field">
+            <input asp-for="Password" type="password" placeholder=" " autocomplete="current-password" />
+            <label asp-for="Password">Şifre</label>
+            <button type="button" class="peek" tabindex="-1" aria-label="Şifreyi göster"></button>
+            <span asp-validation-for="Password" class="field-error"></span>
+        </div>
+    </div>
 
-    <div>
-        Hesabın yok mu?
-        <a asp-action="Register" class="text-primary">Kayıt ol</a>
+    <div class="auth-aux">
+        <a asp-action="ForgotPassword">Şifremi unuttum</a>
+    </div>
+
+    <button type="submit" class="auth-submit">
+        <span class="label">Giriş yap</span>
+        <span class="spin"></span>
+    </button>
+
+    <div class="auth-alt">
+        Hesabın yok mu? <a asp-action="Register">Kayıt ol</a>
     </div>
 </form>
-
-<div class="mt-5 p-3 rounded bg-dark-overlay">
-    <div class="text-sm text-muted mb-2">Test hesapları (şifre: <code>Test123!</code>)</div>
-    <div class="text-sm">
-        <div class="d-flex justify-content-between py-1">
-            <span class="text-muted">basic@music.com</span><span class="badge badge-secondary">Basic</span>
-        </div>
-        <div class="d-flex justify-content-between py-1">
-            <span class="text-muted">gold@music.com</span><span class="badge badge-success">Gold</span>
-        </div>
-        <div class="d-flex justify-content-between py-1">
-            <span class="text-muted">premium@music.com</span><span class="badge badge-info">Premium</span>
-        </div>
-        <div class="d-flex justify-content-between py-1">
-            <span class="text-muted">elit@music.com</span><span class="badge badge-warning">Elit</span>
-        </div>
-    </div>
-</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

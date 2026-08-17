@@ -175,6 +175,7 @@ using (var scope = app.Services.CreateScope())
         builder.Configuration["MusicSettings:CoverFolder"] ?? "wwwroot/covers");
 
     await DbSeeder.SeedAsync(context, userManager, musicFolder, coverFolder);
+    await CatalogExpander.ExpandAsync(context, app.Environment.ContentRootPath);
 
 
     if (app.Environment.IsDevelopment())

@@ -1,0 +1,437 @@
+/* ═══════════════════════════════════════════════════════════
+   Auth sayfaları — giriş, kayıt, şifre sıfırlama
+   ═══════════════════════════════════════════════════════════ */
+
+.auth-shell {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    min-height: 100vh;
+    background: var(--surface-0, #0D0B14);
+}
+
+@media (max-width: 900px) {
+    .auth-shell { grid-template-columns: 1fr; }
+    .auth-stage { display: none; }
+}
+
+/* ─────────────────────────────────── SOL: sahne ───────────── */
+.auth-stage {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(155deg, #1B1233 0%, #120E22 55%, #0B0912 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 44px 48px;
+}
+
+/* Yüzen ışık lekeleri */
+.auth-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: .5;
+    pointer-events: none;
+}
+
+.auth-orb-1 {
+    width: 460px; height: 460px;
+    background: #7C5CFF;
+    top: -120px; left: -110px;
+    animation: orbDrift 22s ease-in-out infinite;
+}
+
+.auth-orb-2 {
+    width: 380px; height: 380px;
+    background: #E0439C;
+    bottom: -110px; right: -90px;
+    animation: orbDrift 28s ease-in-out infinite reverse;
+}
+
+.auth-orb-3 {
+    width: 300px; height: 300px;
+    background: #2BC4C4;
+    top: 45%; right: 18%;
+    opacity: .28;
+    animation: orbDrift 34s ease-in-out infinite;
+}
+
+@keyframes orbDrift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(50px, -36px) scale(1.12); }
+    66%      { transform: translate(-32px, 42px) scale(.92); }
+}
+
+/* İnce ızgara dokusu */
+.auth-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+            linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse at 30% 40%, #000 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse at 30% 40%, #000 20%, transparent 78%);
+}
+
+.auth-stage > * { position: relative; z-index: 2; }
+
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -.03em;
+}
+
+.auth-brand svg { flex-shrink: 0; }
+
+/* Orta blok */
+.auth-pitch { max-width: 460px; }
+
+.auth-pitch h1 {
+    font-size: clamp(30px, 3.4vw, 46px);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    color: #fff;
+    margin: 0 0 16px;
+}
+
+.auth-pitch h1 em {
+    font-style: normal;
+    background: linear-gradient(100deg, #A88BFF, #FF7AB8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.auth-pitch p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(255,255,255,.62);
+    margin: 0 0 34px;
+}
+
+/* Paket şeridi */
+.auth-tiers { display: flex; gap: 8px; margin-bottom: 30px; }
+
+.auth-tier {
+    flex: 1;
+    padding: 11px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    text-align: center;
+    animation: tierIn .6s cubic-bezier(.2,.8,.3,1) backwards;
+}
+
+.auth-tier:nth-child(1) { animation-delay: .25s; }
+.auth-tier:nth-child(2) { animation-delay: .35s; }
+.auth-tier:nth-child(3) { animation-delay: .45s; }
+.auth-tier:nth-child(4) { animation-delay: .55s; }
+
+@keyframes tierIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.auth-tier b {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.auth-tier span { font-size: 11px; color: rgba(255,255,255,.42); }
+
+.auth-tier:nth-child(1) b { color: #9C99AA; }
+.auth-tier:nth-child(2) b { color: #D4A24C; }
+.auth-tier:nth-child(3) b { color: #5EC5D6; }
+.auth-tier:nth-child(4) b { color: #C9A9FF; }
+
+/* Canlı ekolayzer */
+.auth-eq {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 46px;
+}
+
+.auth-eq i {
+    display: block;
+    width: 4px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #A88BFF, #6B49F5);
+    animation: eqBounce 1.25s ease-in-out infinite;
+    opacity: .85;
+}
+
+@keyframes eqBounce {
+    0%, 100% { height: 22%; }
+    50%      { height: 100%; }
+}
+
+.auth-foot {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 12px;
+    color: rgba(255,255,255,.36);
+}
+
+/* ─────────────────────────────────── SAĞ: form ───────────── */
+.auth-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 392px;
+    animation: formIn .55s cubic-bezier(.2,.8,.3,1);
+}
+
+@keyframes formIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.auth-form h2 {
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    color: var(--ink-hi, #F5F3FA);
+    margin: 0 0 7px;
+}
+
+.auth-form .lede {
+    font-size: 14px;
+    color: var(--ink-low, #6E6A80);
+    margin-bottom: 30px;
+}
+
+/* Kademeli alan girişi */
+.auth-row { animation: fieldIn .5s cubic-bezier(.2,.8,.3,1) backwards; }
+.auth-row:nth-of-type(1) { animation-delay: .06s; }
+.auth-row:nth-of-type(2) { animation-delay: .12s; }
+.auth-row:nth-of-type(3) { animation-delay: .18s; }
+.auth-row:nth-of-type(4) { animation-delay: .24s; }
+.auth-row:nth-of-type(5) { animation-delay: .30s; }
+
+@keyframes fieldIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating label */
+.field { position: relative; margin-bottom: 17px; }
+
+.field input {
+    width: 100%;
+    height: 54px;
+    padding: 22px 15px 8px;
+    font-size: 15px;
+    color: var(--ink-hi, #F5F3FA);
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 11px;
+    outline: none;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+}
+
+.field input:focus {
+    border-color: rgba(124,92,255,.62);
+    background: rgba(124,92,255,.06);
+    box-shadow: 0 0 0 3px rgba(124,92,255,.14);
+}
+
+.field label {
+    position: absolute;
+    left: 16px;
+    top: 17px;
+    font-size: 14.5px;
+    font-weight: 400;
+    color: var(--ink-low, #6E6A80);
+    pointer-events: none;
+    transition: transform .18s cubic-bezier(.2,.8,.3,1), font-size .18s, color .18s;
+    transform-origin: left top;
+    margin: 0;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+    transform: translateY(-11px) scale(.76);
+    color: #A88BFF;
+}
+
+.field input::placeholder { color: transparent; }
+
+/* Şifre göster/gizle */
+.field .peek {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: 0;
+    padding: 6px;
+    color: var(--ink-low, #6E6A80);
+    cursor: pointer;
+    line-height: 0;
+    transition: color .18s;
+}
+
+.field .peek:hover { color: var(--ink-hi, #F5F3FA); }
+
+.field-error {
+    display: block;
+    font-size: 12px;
+    color: #FF6B85;
+    margin-top: 5px;
+    padding-left: 3px;
+}
+
+/* Şifre gücü */
+.pw-meter { display: flex; gap: 4px; margin-top: 8px; }
+
+.pw-meter i {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,.1);
+    transition: background .25s;
+}
+
+.pw-meter[data-score="1"] i:nth-child(-n+1) { background: #FF6B85; }
+.pw-meter[data-score="2"] i:nth-child(-n+2) { background: #F0A24C; }
+.pw-meter[data-score="3"] i:nth-child(-n+3) { background: #5EC5D6; }
+.pw-meter[data-score="4"] i { background: #35C47C; }
+
+.pw-hint {
+    font-size: 11.5px;
+    color: var(--ink-low, #6E6A80);
+    margin-top: 6px;
+}
+
+/* Buton */
+.auth-submit {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 6px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(100deg, #7C5CFF, #A855F7);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform .16s, box-shadow .22s, filter .18s;
+    box-shadow: 0 5px 22px rgba(124,92,255,.3);
+}
+
+.auth-submit:hover {
+    box-shadow: 0 8px 30px rgba(124,92,255,.42);
+    filter: brightness(1.06);
+}
+
+.auth-submit:active { transform: scale(.985); }
+
+.auth-submit[disabled] { opacity: .72; cursor: not-allowed; }
+
+.auth-submit .spin {
+    display: none;
+    width: 17px; height: 17px;
+    border: 2px solid rgba(255,255,255,.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+}
+
+.auth-submit.busy .label { display: none; }
+.auth-submit.busy .spin { display: inline-block; }
+.auth-submit.busy { pointer-events: none; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Yardımcı satırlar */
+.auth-aux {
+    display: flex;
+    justify-content: flex-end;
+    margin: -6px 0 18px;
+}
+
+.auth-aux a,
+.auth-alt a {
+    font-size: 13.5px;
+    color: #A88BFF;
+    text-decoration: none;
+}
+
+.auth-aux a:hover,
+.auth-alt a:hover { text-decoration: underline; }
+
+.auth-alt {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--ink-low, #6E6A80);
+}
+
+.auth-sep {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 26px 0;
+    color: var(--ink-low, #6E6A80);
+    font-size: 12px;
+}
+
+.auth-sep::before,
+.auth-sep::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,.08);
+}
+
+/* Uyarı kutuları */
+.auth-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.auth-alert-error {
+    background: rgba(255,77,106,.1);
+    border: 1px solid rgba(255,77,106,.24);
+    color: #FF8FA3;
+}
+
+.auth-alert-success {
+    background: rgba(53,196,124,.1);
+    border: 1px solid rgba(53,196,124,.24);
+    color: #6FD9A2;
+}
+
+.auth-alert ul { margin: 0; padding-left: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-orb, .auth-eq i, .auth-tier, .auth-form, .auth-row {
+        animation: none !important;
+    }
+}
